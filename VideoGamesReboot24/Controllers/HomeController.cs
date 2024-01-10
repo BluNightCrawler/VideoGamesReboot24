@@ -18,6 +18,26 @@ namespace VideoGamesReboot24.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ViewResult VideoGameForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ViewResult VideoGameForm(TestModel product)
+        {
+            if (ModelState.IsValid)
+            {
+                Repository.AddResponse(product);
+                return View("VideoGameThanks", product);
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         public IActionResult Privacy()
         {
             return View();

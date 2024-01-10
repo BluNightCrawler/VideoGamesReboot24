@@ -2,20 +2,48 @@
 
 @{
     ViewData["Title"] = "VideoGameForm";
+    
 }
 
 <h1>VideoGameForm</h1>
 
-<h4>TestModel</h4>
+<h4>Create Video Game</h4>
 <hr />
 <div class="row">
+    <body>
     <div class="col-md-4">
-        <form asp-action="VideoGameForm">
+        
+        <form asp-action="VideoGameForm" method="post" class="m-2">
+            <h5 class="bg-primary text-white text-center">Video Games</h5>
+             
+            <div asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label asp-for="ProductName"> Your video game title: </label>
+            <input asp-for="ProductName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"> Just give a a description of the game: </label>
+            <input asp-for="Description" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Price"> Your video game value: </label>
+            <input asp-for="Price" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Category"> Your video game genre: </label>
+            <input asp-for="Category" />
+        </div>
+        <div class="form-group">
+            <label asp-for="System"> What platform is the game on: </label>
+            <input asp-for="System" />
+        </div>
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+        </body>
     </div>
 </div>
 

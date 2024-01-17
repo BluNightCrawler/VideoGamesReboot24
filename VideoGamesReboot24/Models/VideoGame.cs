@@ -3,22 +3,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VideoGamesReboot24.Models
 {
-    public class TestModel
+    public class VideoGame
     {
-        public long ProductID { get; set; }
+        [Key]
+        public long? ProductID { get; set; }
         [Required(ErrorMessage = "Please enter a Title")]
-        public string ProductName { get; set;}
+        public string ProductName { get; set; }
         [Required(ErrorMessage = "Please enter a Description")]
-        public string Description { get; set;}
+        public string Description { get; set; }
 
         [Required(ErrorMessage = "Please enter a Price")]
-        [Column(TypeName = "decimal(8,2")]
-        public double Price { get; set;}
+        [Column(TypeName = "decimal(8,2)")]
+        public double Price { get; set; }
         [Required(ErrorMessage = "Please enter a Genre")]
-        public string Category { get; set;}
+        public string Category { get; set; }
 
         [Required(ErrorMessage = "Please enter a System")]
-        public string System { get; set;}
+        public string System { get; set; }
         public bool Active { get; set; }
     }
 }

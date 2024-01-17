@@ -6,17 +6,14 @@ namespace VideoGamesReboot24.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private IStoreRepository repository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IStoreRepository repo)
         {
-            _logger = logger;
+            repository = repo;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View(repository.Products);
 
         [HttpGet]
         public ViewResult VideoGameForm()
@@ -25,11 +22,11 @@ namespace VideoGamesReboot24.Controllers
         }
 
         [HttpPost]
-        public ViewResult VideoGameForm(TestModel product)
+        public ViewResult VideoGameForm(VideoGame product)
         {
             if (ModelState.IsValid)
             {
-                Repository.AddResponse(product);
+                //Repository.AddResponse(product);
                 return View("VideoGameThanks", product);
             }
             else

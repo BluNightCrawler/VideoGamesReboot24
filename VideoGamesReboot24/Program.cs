@@ -1,7 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using VideoGamesReboot24.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<GameStoreDbContext>(opts => {
+    opts.UseSqlServer(
+    builder.Configuration["ConnectionStrings:GameStoreConnection"]);
+});
+
+builder.Services.AddScoped<IStoreRepository, Repository>();
 
 var app = builder.Build();
 
@@ -23,5 +33,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+SeedData.EnsurePopulated(app);
 
 app.Run();

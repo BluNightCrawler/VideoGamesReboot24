@@ -1,14 +1,13 @@
 ﻿namespace VideoGamesReboot24.Models
 {
-    public class Repository
+    public class Repository : IStoreRepository
     {
-        private static List<TestModel> responses = new List<TestModel>();
-        public static IEnumerable<TestModel> Response => responses;
-
-        public static void AddResponse(TestModel response)
+        private GameStoreDbContext context;
+        public Repository(GameStoreDbContext ctx)
         {
-            responses.Add(response);
+            context = ctx;
         }
+        public IQueryable<VideoGame> Products => context.Products;
 
     }
 }

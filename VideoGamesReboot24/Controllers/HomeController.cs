@@ -7,6 +7,7 @@ namespace VideoGamesReboot24.Controllers
     public class HomeController : Controller
     {
         private IStoreRepository repository;
+        static List<SeedData> video ;
 
         public HomeController(IStoreRepository repo)
         {
@@ -39,11 +40,10 @@ namespace VideoGamesReboot24.Controllers
            
         }*/
 
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(int id)
         {
-            var vdg = VideoGame.Where(V => V.ProductID == Id).FirstOrDefault();
-
-            return View(vdg);
+            //VideoGame game = VideoGame.
+            return View();
         }
 
         [HttpPost]

@@ -13,12 +13,10 @@
         @p.Description
         <p>@p.Price.ToString("c")</p>
         <td>
-            @Html.ActionLink("Edit","Edit", new{id=p.ProductID}) |
-            @Html.ActionLink("Details","Details", new{id=p.ProductID}) |
-            @Html.ActionLink("Delete","Delete", new{id=p.ProductID}) 
-        </td>
-        <button>Delete</button>
-        <button>Details</button>
+            @Html.ActionLink("Edit","VideoGamesEdit", new{id=p.ProductID}) |
+            @Html.ActionLink("Details","VideoGamesDetails", new{id=p.ProductID}) |
+            @Html.ActionLink("Delete","VideoGamesDelete", new{id=p.ProductID}) 
+        </td>        
         <button>Add to Cart</button>
     </div>
     

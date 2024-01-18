@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VideoGamesReboot24.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

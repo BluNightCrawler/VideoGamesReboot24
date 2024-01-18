@@ -34,6 +34,30 @@ namespace VideoGamesReboot24.Controllers
                 return View();
             }
         }
+        /*public ActionResult Details(int? id)
+        {
+           
+        }*/
+
+        public ActionResult Edit(int Id)
+        {
+            var vdg = VideoGame.Where(V => V.ProductID == Id).FirstOrDefault();
+
+            return View(vdg);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(VideoGame vdg)
+        {
+            var Name = vdg.ProductName;
+            var price = vdg.Price;
+            var des = vdg.Description;
+            var cat = vdg.Category;
+            var plat = vdg.System;
+
+            return RedirectToAction("Index");
+        }
+        
 
         public IActionResult Privacy()
         {

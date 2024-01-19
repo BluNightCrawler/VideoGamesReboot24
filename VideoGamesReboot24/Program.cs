@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VideoGamesReboot24.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 SeedData.EnsurePopulated(app);
 

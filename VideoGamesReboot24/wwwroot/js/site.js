@@ -2,3 +2,12 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+$(document).ready(function () {
+    $( ".nav-link" ).each(
+        function (i, data) {
+            if (data.href == location.href) {
+                $(data).addClass("link-secondary");
+            }
+        }
+    );
+});

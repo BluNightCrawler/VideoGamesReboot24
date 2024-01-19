@@ -1,24 +1,29 @@
 ﻿@model IQueryable<VideoGame>
 
-    <DocType html>
+@{
+    ViewData["Title"] = "Home";
+}
+<DocType html>
 <div class="text-center">
     <h1 class="display-4">Welcome To Video Game Store</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <a class="btn btn-primary" asp-Controller="Home" asp-action="VideoGameForm">Form for adding a videogame to the List</a>
 </div>
 @foreach (var p in Model ?? Enumerable.Empty<VideoGame>())
 {
-    <div class="card">
-        <h3>@p.ProductName</h3>
-        @p.Description
-        <p>@p.Price.ToString("c")</p>
-        <td>
-            @Html.ActionLink("Edit","VideoGamesEdit", new{id=p.ProductID}) |
-            @Html.ActionLink("Details","VideoGamesDetails", new{id=p.ProductID}) |
-            @Html.ActionLink("Delete","VideoGamesDelete", new{id=p.ProductID}) 
-        </td>        
-        <button>Add to Cart</button>
+    <div class="card" style="width: 150rem;">
+        <img src="~/Images/placeholder.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@p.ProductName</h5>
+            <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
+            <p class="card-text">@p.Description</p>
+            <td>
+              @Html.ActionLink("Edit","VideoGamesEdit", new{id=p.ProductID}) |
+              @Html.ActionLink("Details","VideoGamesDetails", new{id=p.ProductID}) |
+              @Html.ActionLink("Delete","VideoGamesDelete", new{id=p.ProductID}) 
+            </td>    
+            <hr/>
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+        </div>
     </div>
-    
 
 }

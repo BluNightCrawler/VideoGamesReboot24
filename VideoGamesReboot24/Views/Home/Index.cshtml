@@ -1,9 +1,17 @@
 ﻿@model IQueryable<VideoGame>
+@{
+    ViewData["Title"] = "Home";
+}
 @foreach (var p in Model ?? Enumerable.Empty<VideoGame>())
 {
-    <div class="card">
-        <h3>@p.ProductName</h3>
-        @p.Description
-        <p>@p.Price.ToString("c")</p>
+    <div class="card" style="width: 150rem;">
+        <img src="~/Images/placeholder.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@p.ProductName</h5>
+            <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
+            <p class="card-text">@p.Description</p>
+            <hr/>
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+        </div>
     </div>
 }

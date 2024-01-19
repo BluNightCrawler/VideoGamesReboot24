@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using VideoGamesReboot24.Models;
+using System.Data.SqlClient;
+using System;
 
 namespace VideoGamesReboot24.Controllers
 {
     public class HomeController : Controller
     {
+        
         private IStoreRepository repository;
         static List<SeedData> video ;
 
@@ -15,6 +18,7 @@ namespace VideoGamesReboot24.Controllers
         }
 
         public IActionResult Index() => View(repository.Products);
+        
 
         [HttpGet]
         public ViewResult VideoGameForm()
@@ -27,7 +31,7 @@ namespace VideoGamesReboot24.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Repository.AddResponse(product);
+                /*Repository.AddResponse(product);*/
                 return View("VideoGameThanks", product);
             }
             else
@@ -69,5 +73,6 @@ namespace VideoGamesReboot24.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+       
     }
 }

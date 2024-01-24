@@ -1,4 +1,4 @@
-﻿@model IQueryable<VideoGame>
+﻿@model VideoGameListViewModel
 
 @{
     ViewData["Title"] = "Home";
@@ -9,7 +9,7 @@
     <a class="btn btn-primary" asp-Controller="Home" asp-action="VideoGameForm">Form for adding a videogame to the List</a>
 </div>
 <div class="row">
-@foreach (var p in Model ?? Enumerable.Empty<VideoGame>())
+@foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGame>())
 {
     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
         <div class="card" style="width: 15rem;">
@@ -30,3 +30,4 @@
     </div>
 }
 </div>
+<div page-model="@Model?.PagingInfo" page-action="Index"></div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using VideoGamesReboot24.Models;
+using VideoGamesReboot24.Models.ViewModels;
 using System.Data.SqlClient;
 using System;
 
@@ -10,15 +11,26 @@ namespace VideoGamesReboot24.Controllers
     {
         
         private IStoreRepository repository;
-        static List<SeedData> video ;
+        //static List<SeedData> video ;
+        public int PageSize = 8;
 
         public HomeController(IStoreRepository repo)
         {
             repository = repo;
         }
 
-        public IActionResult Index() => View(repository.Products);
-        
+        public ViewResult Index(int productPage = 1)
+            => View(new VideoGameListViewModel {
+                VideoGames = repository.Products
+                    .OrderBy(p => p.ProductID)
+                    .Skip((productPage - 1) * PageSize)
+                    .Take(PageSize),
+                PagingInfo = new PagingInfo {
+                    CurrentPage = productPage,
+                    ItemsPerPage = PageSize,
+                    TotalItems = repository.Products.Count()
+                }
+            });
 
         [HttpGet]
         public ViewResult VideoGameForm()

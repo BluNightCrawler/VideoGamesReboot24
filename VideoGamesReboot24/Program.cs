@@ -27,14 +27,17 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
-
-app.UseAuthorization();
+app.MapControllerRoute("pagination",
+    "Products/{productPage}",
+    new { Controller = "Home", action = "Index" });
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.UseRouting();
+
+app.UseAuthorization();
 
 SeedData.EnsurePopulated(app);
 

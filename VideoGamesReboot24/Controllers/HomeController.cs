@@ -4,6 +4,7 @@ using VideoGamesReboot24.Models;
 using VideoGamesReboot24.Models.ViewModels;
 using System.Data.SqlClient;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -19,17 +20,20 @@ namespace VideoGamesReboot24.Controllers
             repository = repo;
         }
 
-        public ViewResult Index(int productPage = 1)
+        public ViewResult Index(string? category, int productPage = 1)
             => View(new VideoGameListViewModel {
                 VideoGames = repository.Products
+                    .Where(p => category == null || p.Category == category)
                     .OrderBy(p => p.ProductID)
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize),
                 PagingInfo = new PagingInfo {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = repository.Products.Count()
-                }
+                    TotalItems = (category==null? repository.Products.Count() :
+                        repository.Products.Where(e => e.Category == category).Count())
+                },
+                CurrentCategory = category
             });
 
         [HttpGet]
@@ -51,10 +55,20 @@ namespace VideoGamesReboot24.Controllers
                 return View();
             }
         }
-        /*public ActionResult Details(int? id)
+        [HttpGet]
+        [Route("Home/Details/{id?}")]
+        [Route("Products/Details/{id?}")]
+        public ViewResult Details(long? id)
         {
-           
-        }*/
+            if (id == null) return (ViewResult)Error();
+
+            VideoGame? game = repository.Products
+                .FirstOrDefault(p => p.ProductID == id);
+
+            if (game == null) return (ViewResult)Error();
+
+            return View("VideoGamesDetails",game);
+        }
 
         public ActionResult Edit(int id)
         {

@@ -18,8 +18,14 @@ namespace VideoGamesReboot24.Infrastructure
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext? ViewContext { get; set; }
+
         public PagingInfo? PageModel { get; set; }
+
         public string? PageAction { get; set; }
+
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
+
         public override void Process(TagHelperContext context,
         TagHelperOutput output)
         {
@@ -34,7 +40,8 @@ namespace VideoGamesReboot24.Infrastructure
                     TagBuilder innerLi = new TagBuilder("li");
                     innerLi.AddCssClass("page-item");
                     TagBuilder tag = new TagBuilder("a");
-                    tag.Attributes["href"] = urlHelper.Action(PageAction, new { productPage = i });
+                    PageUrlValues["productPage"] = i;
+                    tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                     tag.AddCssClass("page-link");
                     tag.InnerHtml.Append(i.ToString());
                     innerLi.InnerHtml.AppendHtml(tag);

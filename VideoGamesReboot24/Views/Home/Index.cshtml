@@ -6,7 +6,7 @@
 <DocType html>
 <div class="text-center">
     <h1 class="display-4">Welcome To Video Game Store</h1>
-    <a class="btn btn-primary" asp-Controller="Home" asp-action="VideoGameForm">Form for adding a videogame to the List</a>
+    <a class="btn btn-primary" asp-controller="Home" asp-action="VideoGameForm">Form for adding a videogame to the List</a>
 </div>
 <div class="row">
 @foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGame>())
@@ -19,9 +19,10 @@
                 <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
                 <p class="card-text">@p.Description</p>
                 <td>
-                  @Html.ActionLink("Edit","VideoGamesEdit", new{id=p.ProductID}) |
-                  @Html.ActionLink("Details","VideoGamesDetails", new{id=p.ProductID}) |
-                  @Html.ActionLink("Delete","VideoGamesDelete", new{id=p.ProductID}) 
+                    
+                    @Html.ActionLink("Edit","VideoGamesEdit", new{id=p.ProductID}) |
+                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a> |
+                    @Html.ActionLink("Delete","VideoGamesDelete", new{id=p.ProductID}) 
                 </td>    
                 <hr/>
                 <a href="#" class="btn btn-primary">Add to Cart</a>
@@ -30,4 +31,4 @@
     </div>
 }
 </div>
-<div page-model="@Model?.PagingInfo" page-action="Index"></div>
+<div page-model="@Model?.PagingInfo" page-action="Index" page-url-category="@Model?.CurrentCategory!"></div>

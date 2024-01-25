@@ -14,6 +14,9 @@ builder.Services.AddDbContext<GameStoreDbContext>(opts => {
 
 builder.Services.AddScoped<IStoreRepository, Repository>();
 
+builder.Services.AddRazorPages();
+//builder.Services.AddServerSideBlazor();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,13 +30,25 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.MapControllerRoute("pagination",
-    "Products/{productPage}",
+app.MapControllerRoute("catpage", "{category}/{productPage:int}",
     new { Controller = "Home", action = "Index" });
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute("page", "{productPage:int}",
+    new { Controller = "Home", action = "Index", productPage = 1 });
+
+app.MapControllerRoute("category", "{category}",
+    new { Controller = "Home", action = "Index", productPage = 1 });
+
+app.MapControllerRoute("pagination", "Products/{productPage}",
+    new { Controller = "Home", action = "Index", productPage = 1 });
+
+app.MapControllerRoute("details", "Products/Details/{productID}",
+    new { Controller = "Home", action = "Details"});
+
+app.MapDefaultControllerRoute();
+app.MapRazorPages();
+//app.MapBlazorHub();
+//app.MapFallbackToPage("/admin/{*catchall}", "/Admin/Index");
 
 app.UseRouting();
 

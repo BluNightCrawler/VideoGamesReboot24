@@ -1,9 +1,19 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model VideoGame
 @{
+    ViewData["Title"] = $"Details - {Model.ProductID}";
 }
-
-<dt>
-
-</dt>
+<DocType html>
+<div class="card" style="width: 15rem;">
+    <img src="~/Images/placeholder.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@Model.ProductName</h5>
+        <h6 class="card-subtitle text-muted">@Model.Price.ToString("c")</h6>
+        <p class="card-text">@Model.Description</p>
+        <td>
+            @Html.ActionLink("Edit", "VideoGamesEdit", new { id = Model.ProductID }) |
+            @Html.ActionLink("Delete", "VideoGamesDelete", new { id = Model.ProductID })
+        </td>
+        <hr />
+        <a href="#" class="btn btn-primary">Add to Cart</a>
+    </div>
+</div>

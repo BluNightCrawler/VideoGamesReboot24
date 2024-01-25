@@ -70,29 +70,38 @@ namespace VideoGamesReboot24.Controllers
             return View("VideoGamesDetails",game);
         }
 
-        public ActionResult Edit(int id)
+        [HttpGet]
+        [Route("Home/Edit/{id?}")]
+        [Route("Products/Edit/{id?}")]
+        public ActionResult Edit(long? id)
         {
-            //VideoGame game = VideoGame.
-            return View();
+            if (id == null) return (ViewResult)Error();
+
+            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
+
+            if (game == null) return (ViewResult)Error();
+
+            return View("VideoGamesEdit", game);
         }
 
         [HttpPost]
-        public ActionResult Edit(VideoGame vdg)
+        public ActionResult Edit(VideoGame game)
         {
-            var Name = vdg.ProductName;
-            var price = vdg.Price;
-            var des = vdg.Description;
-            var cat = vdg.Category;
-            var plat = vdg.System;
+            VideoGame? gameEdit = repository.Products.FirstOrDefault(p => p.ProductID == game.ProductID);
+
+            if (gameEdit == null) return (ViewResult)Error();
+
+            gameEdit.ProductName = game.ProductName;
+            gameEdit.Price = game.Price;
+            gameEdit.Description = game.Description;
+            gameEdit.Category = game.Category;
+            gameEdit.System = game.System;
+
+            repository.SaveProduct(game);
 
             return RedirectToAction("Index");
         }
         
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

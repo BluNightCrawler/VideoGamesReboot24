@@ -45,6 +45,9 @@ app.MapControllerRoute("pagination", "Products/{productPage}",
 app.MapControllerRoute("details", "Products/Details/{productID}",
     new { Controller = "Home", action = "Details"});
 
+app.MapControllerRoute("edit", "Products/Edit/{productID}",
+    new { Controller = "Home", action = "Edit" });
+
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 //app.MapBlazorHub();

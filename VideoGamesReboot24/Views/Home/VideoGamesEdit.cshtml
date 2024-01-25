@@ -3,9 +3,9 @@
 <h2>Edit</h2>
     @using(Html.BeginForm()){
         @Html.AntiForgeryToken();
-        <form>
+        <div class="form-horizontal">
             <h4>Video Game</h4>
-            <hr />
+            <hr/>
             @Html.ValidationSummary(true,"", new{@class = "text-danger"})
             @Html.HiddenFor(model => model.ProductID)
 
@@ -54,7 +54,7 @@
                 </a>
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-        </form>
+        </div>
     }
 
 

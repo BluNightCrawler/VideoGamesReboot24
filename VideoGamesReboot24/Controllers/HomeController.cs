@@ -87,6 +87,8 @@ namespace VideoGamesReboot24.Controllers
         [HttpPost]
         public ActionResult Edit(VideoGame game)
         {
+            if (!ModelState.IsValid) { return View("VideoGamesEdit", game); }
+
             VideoGame? gameEdit = repository.Products.FirstOrDefault(p => p.ProductID == game.ProductID);
 
             if (gameEdit == null) return (ViewResult)Error();

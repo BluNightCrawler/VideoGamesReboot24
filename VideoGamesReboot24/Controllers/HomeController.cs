@@ -36,25 +36,28 @@ namespace VideoGamesReboot24.Controllers
                 CurrentCategory = category
             });
 
+
         [HttpGet]
-        public ViewResult VideoGameForm()
+        [Route("Home/Create")]
+        [Route("Products/Create")]
+        public ViewResult Create()
         {
-            return View();
+            return View("VideoGameForm");
         }
 
         [HttpPost]
-        public ViewResult VideoGameForm(VideoGame product)
+        [Route("Home/Create")]
+        [Route("Products/Create")]
+        public ViewResult VideoGameForm(VideoGame game)
         {
-            if (ModelState.IsValid)
-            {
-                /*Repository.AddResponse(product);*/
-                return View("VideoGameThanks", product);
-            }
-            else
-            {
-                return View();
-            }
+            if (!ModelState.IsValid) { return View(game); }
+
+            repository.CreateProduct(game);
+
+            return View("VideoGameThanks", game);
+
         }
+
         [HttpGet]
         [Route("Home/Details/{id?}")]
         [Route("Products/Details/{id?}")]
@@ -69,6 +72,7 @@ namespace VideoGamesReboot24.Controllers
 
             return View("VideoGamesDetails",game);
         }
+
 
         [HttpGet]
         [Route("Home/Edit/{id?}")]

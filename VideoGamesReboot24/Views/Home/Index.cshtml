@@ -21,7 +21,7 @@
                 <td>
                     <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a> |
                     <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a> |
-                    @Html.ActionLink("Delete","VideoGamesDelete", new{id=p.ProductID}) 
+                    <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
                 </td>    
                 <hr/>
                 <a href="#" class="btn btn-primary">Add to Cart</a>

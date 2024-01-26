@@ -65,8 +65,7 @@ namespace VideoGamesReboot24.Controllers
         {
             if (id == null) return (ViewResult)Error();
 
-            VideoGame? game = repository.Products
-                .FirstOrDefault(p => p.ProductID == id);
+            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
 
             if (game == null) return (ViewResult)Error();
 
@@ -104,6 +103,22 @@ namespace VideoGamesReboot24.Controllers
             gameEdit.System = game.System;
 
             repository.SaveProduct(game);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Route("Home/Delete/{id?}")]
+        [Route("Products/Delete/{id?}")]
+        public ActionResult Delete(long? id)
+        {
+            if (id == null) return (ViewResult)Error();
+
+            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
+
+            if (game == null) return (ViewResult)Error();
+
+            repository.DeleteProduct(game);
 
             return RedirectToAction("Index");
         }

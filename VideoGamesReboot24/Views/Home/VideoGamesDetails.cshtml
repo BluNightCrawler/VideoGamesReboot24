@@ -11,7 +11,7 @@
         <p class="card-text">@Model.Description</p>
         <td>
             <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.ProductID">Edit</a> |
-            @Html.ActionLink("Delete", "VideoGamesDelete", new { id = Model.ProductID })
+            <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
         </td>
         <hr />
         <a href="#" class="btn btn-primary">Add to Cart</a>

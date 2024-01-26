@@ -48,8 +48,11 @@ app.MapControllerRoute("details", "Products/Details/{productID}",
 app.MapControllerRoute("edit", "Products/Edit/{productID}",
     new { Controller = "Home", action = "Edit" });
 
+app.MapControllerRoute("delete", "Products/Delete/{productID}",
+    new { Controller = "Home", action = "Delete" });
 
 app.MapDefaultControllerRoute();
+
 app.MapRazorPages();
 //app.MapBlazorHub();
 //app.MapFallbackToPage("/admin/{*catchall}", "/Admin/Index");

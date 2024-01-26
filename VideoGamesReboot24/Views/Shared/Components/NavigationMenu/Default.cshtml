@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<string>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center gap-1">
     @foreach (string category in Model ?? Enumerable.Empty<string>())
     {
         <a class="btn @(category == ViewBag.SelectedCategory? "btn-primary": "btn-outline-secondary")"

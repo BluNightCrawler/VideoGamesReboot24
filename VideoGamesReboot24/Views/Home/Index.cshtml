@@ -1,4 +1,4 @@
-﻿@model IQueryable<VideoGame>
+﻿@model VideoGameListViewModel
 
 @{
     ViewData["Title"] = "Home";
@@ -6,10 +6,10 @@
 <DocType html>
 <div class="text-center">
     <h1 class="display-4">Welcome To Video Game Store</h1>
-    <a class="btn btn-primary" asp-Controller="Home" asp-action="VideoGameForm">Form for adding a videogame to the List</a>
+    <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Form for adding a videogame to the List</a>
 </div>
-<div class="row">
-@foreach (var p in Model ?? Enumerable.Empty<VideoGame>())
+<div class="row mt-3 mb-3">
+@foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGame>())
 {
     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
         <div class="card" style="width: 15rem;">
@@ -19,9 +19,9 @@
                 <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
                 <p class="card-text">@p.Description</p>
                 <td>
-                  @Html.ActionLink("Edit","VideoGamesEdit", new{id=p.ProductID}) |
-                  @Html.ActionLink("Details","VideoGamesDetails", new{id=p.ProductID}) |
-                  @Html.ActionLink("Delete","VideoGamesDelete", new{id=p.ProductID}) 
+                    <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a> |
+                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a> |
+                    <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
                 </td>    
                 <hr/>
                 <a href="#" class="btn btn-primary">Add to Cart</a>
@@ -30,3 +30,4 @@
     </div>
 }
 </div>
+<div page-model="@Model?.PagingInfo" page-action="Index" page-url-category="@Model?.CurrentCategory!"></div>

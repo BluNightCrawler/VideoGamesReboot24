@@ -25,7 +25,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VideoGameForm">Add Game</a>
+                            <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Create">Add Game</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -39,6 +39,9 @@
             </div>
         </nav>
     </header>
+    <div id="categories" class="">
+        <vc:navigation-menu />
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

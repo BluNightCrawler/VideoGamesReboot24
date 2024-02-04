@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using VideoGamesReboot24.Models;
 using VideoGamesReboot24.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -80,8 +81,19 @@ namespace VideoGamesReboot24.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Failed to create User");
-                return View(registration);
+                if (result != null)
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                    return View(registration);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Failed to create user");
+                    return View(registration);
+                }
             }
         }
 

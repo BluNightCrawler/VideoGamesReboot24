@@ -1,0 +1,29 @@
+﻿@model VideoGamesReboot24.Models.ViewModels.UserCredentials
+
+<div class="w-100 m-auto" style="max-width:330px;">
+    <form asp-action="LoginUser" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]>
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-floating">
+            <input asp-for="UserName" type="username" class="form-control mb-2" id="floatingInput" placeholder="Username">
+            <label asp-for="UserName" for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+            <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label asp-for="Password" for="floatingPassword">Password</label>
+        </div>
+
+        <div class="form-check text-start my-3">
+            <input asp-for="RememberMe" class="form-check-input" type="checkbox" id="flexCheckDefault">
+            <label asp-for="RememberMe" class="form-check-label" for="flexCheckDefault">Remember me</label>
+        </div>
+        <input class="btn btn-primary w-100 py-2 mb-3" type="submit" value="Sign in">
+    </form>
+    <span>Don't have an account? <a class="" asp-controller="Account" asp-action="Register">Register Here.</a></span>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

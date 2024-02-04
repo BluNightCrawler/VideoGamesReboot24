@@ -17,6 +17,12 @@ builder.Services.AddScoped<IStoreRepository, Repository>();
 builder.Services.AddRazorPages();
 //builder.Services.AddServerSideBlazor();
 
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration["ConnectionStrings:IdentityConnection"]));
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppIdentityDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -59,8 +65,10 @@ app.MapRazorPages();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 SeedData.EnsurePopulated(app);
+IdentitySeedData.EnsurePopulated(app);
 
 app.Run();

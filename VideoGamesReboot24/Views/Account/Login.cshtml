@@ -1,7 +1,7 @@
 ﻿@model VideoGamesReboot24.Models.ViewModels.UserCredentials
 
 <div class="w-100 m-auto" style="max-width:330px;">
-    <form asp-action="LoginUser" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]>
+    <form asp-action="LoginUser" method="post">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -23,6 +23,21 @@
     </form>
     <span>Don't have an account? <a class="" asp-controller="Account" asp-action="Register">Register Here.</a></span>
 </div>
+
+@{
+    var successfullyRegistered = ViewData["SuccessfulRegister"];
+    if (successfullyRegistered!=null && ((bool)ViewData["SuccessfulRegister"]==true))
+    {
+        <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Successfully Registered!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

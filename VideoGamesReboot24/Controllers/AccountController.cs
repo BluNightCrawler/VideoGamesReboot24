@@ -20,15 +20,14 @@ namespace VideoGamesReboot24.Controllers
         //    return View("Login");
         //}
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login()
         {
-            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginUser(UserCredentials credentials, string returnUrl = null)
+        public async Task<IActionResult> LoginUser(UserCredentials credentials)
         {
             if (!ModelState.IsValid)
             {
@@ -42,10 +41,7 @@ namespace VideoGamesReboot24.Controllers
             var result = await signInManager.PasswordSignInAsync(user, credentials.Password, credentials.RememberMe, false);
             if (result.Succeeded)
             {
-                if (Url.IsLocalUrl(returnUrl))
-                    return Redirect(returnUrl);
-                else
-                    return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -54,10 +50,46 @@ namespace VideoGamesReboot24.Controllers
             }
         }
         [HttpGet]
-        public IActionResult Register(string returnUrl = null)
+        public IActionResult Register()
         {
-            ViewData["ReturnUrl"] = returnUrl;
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(UserRegistration registration)
+        {
+            if (!ModelState.IsValid) return View(registration);
+
+            IdentityUser user = await userManager.FindByNameAsync(registration.UserName);
+
+            if (user != null) {
+                ModelState.AddModelError("", "Username Taken");
+                return View(registration); 
+            }
+
+            user = new IdentityUser(registration.UserName);
+            user.Email = registration.Email;
+
+            var result = await userManager.CreateAsync(user, registration.Password);
+
+            if (result.Succeeded)
+            {
+                ViewData["SuccessfulRegister"] = true;
+                return View("Login");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Failed to create User");
+                return View(registration);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

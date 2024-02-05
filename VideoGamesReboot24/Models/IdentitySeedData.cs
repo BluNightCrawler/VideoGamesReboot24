@@ -7,8 +7,12 @@ namespace VideoGamesReboot24.Models
     {
         private const string adminUser = "Admin";
         private const string adminPassword = "Secret123$";
+        private static readonly string[] roles = { "Admin", "User" };
         public static async void EnsurePopulated(IApplicationBuilder app)
         {
+            EnsureRolesExist(app);
+
+            //Creating an Admin User
             AppIdentityDbContext context = app.ApplicationServices
                 .CreateScope().ServiceProvider
                 .GetRequiredService<AppIdentityDbContext>();
@@ -26,6 +30,26 @@ namespace VideoGamesReboot24.Models
                 user.Email = "admin@example.com";
                 user.PhoneNumber = "555-1234";
                 await userManager.CreateAsync(user, adminPassword);
+            }
+            IList<string> roles = await userManager.GetRolesAsync(user);
+            if (!roles.Contains("Admin"))
+            {
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+        }
+
+        //Creating the rolls in the database if they dont exist already
+        private static async void EnsureRolesExist(IApplicationBuilder app)
+        {
+            RoleManager<IdentityRole> roleManager = app.ApplicationServices
+                .CreateScope().ServiceProvider
+                .GetRequiredService<RoleManager<IdentityRole>>();
+            foreach (string role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
             }
         }
     }

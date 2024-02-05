@@ -22,9 +22,17 @@
                 <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
                 <p class="card-text">@p.Description</p>
                 <td>
-                    <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a> |
-                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a> |
-                    <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a>
+                        <span> | </span>
+                    }
+                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span> | </span>
+                        <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
+                    }
                 </td>    
                 <hr/>
                 <a href="#" class="btn btn-primary">Add to Cart</a>

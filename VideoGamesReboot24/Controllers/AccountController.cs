@@ -76,7 +76,7 @@ namespace VideoGamesReboot24.Controllers
 
             if (result.Succeeded)
             {
-                ViewData["SuccessfulRegister"] = true;
+                ViewBag.SuccessfullyRegistered = true;
                 return View("Login");
             }
             else

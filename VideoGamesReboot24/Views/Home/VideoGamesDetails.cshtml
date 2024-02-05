@@ -9,10 +9,14 @@
         <h5 class="card-title">@Model.ProductName</h5>
         <h6 class="card-subtitle text-muted">@Model.Price.ToString("c")</h6>
         <p class="card-text">@Model.Description</p>
-        <td>
-            <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.ProductID">Edit</a> |
-            <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
-        </td>
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.ProductID">Edit</a>
+                <span> | </span>
+                <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@Model.ProductID">Delete</a>
+            </td>
+        }
         <hr />
         <a href="#" class="btn btn-primary">Add to Cart</a>
     </div>

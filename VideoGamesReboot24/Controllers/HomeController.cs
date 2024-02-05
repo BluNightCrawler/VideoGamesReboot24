@@ -5,6 +5,7 @@ using VideoGamesReboot24.Models.ViewModels;
 using System.Data.SqlClient;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -40,6 +41,7 @@ namespace VideoGamesReboot24.Controllers
         [HttpGet]
         [Route("Home/Create")]
         [Route("Products/Create")]
+        [Authorize(Policy = "AdminRestricted")]
         public ViewResult Create()
         {
             return View("VideoGameForm");
@@ -48,6 +50,7 @@ namespace VideoGamesReboot24.Controllers
         [HttpPost]
         [Route("Home/Create")]
         [Route("Products/Create")]
+        [Authorize(Policy = "AdminRestricted")]
         public ViewResult VideoGameForm(VideoGame game)
         {
             if (!ModelState.IsValid) { return View(game); }
@@ -76,6 +79,7 @@ namespace VideoGamesReboot24.Controllers
         [HttpGet]
         [Route("Home/Edit/{id?}")]
         [Route("Products/Edit/{id?}")]
+        [Authorize(Policy = "AdminRestricted")]
         public ActionResult Edit(long? id)
         {
             if (id == null) return (ViewResult)Error();
@@ -88,6 +92,7 @@ namespace VideoGamesReboot24.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminRestricted")]
         public ActionResult Edit(VideoGame game)
         {
             if (!ModelState.IsValid) { return View("VideoGamesEdit", game); }
@@ -110,6 +115,7 @@ namespace VideoGamesReboot24.Controllers
         [HttpGet]
         [Route("Home/Delete/{id?}")]
         [Route("Products/Delete/{id?}")]
+        [Authorize(Policy = "AdminRestricted")]
         public ActionResult Delete(long? id)
         {
             if (id == null) return (ViewResult)Error();

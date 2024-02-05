@@ -76,6 +76,7 @@ namespace VideoGamesReboot24.Controllers
 
             if (result.Succeeded)
             {
+                await userManager.AddToRoleAsync(user, "User");
                 ViewBag.SuccessfullyRegistered = true;
                 return View("Login");
             }

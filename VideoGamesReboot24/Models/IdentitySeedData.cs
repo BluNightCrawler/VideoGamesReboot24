@@ -10,7 +10,7 @@ namespace VideoGamesReboot24.Models
         private static readonly string[] roles = { "Admin", "User" };
         public static async void EnsurePopulated(IApplicationBuilder app)
         {
-            EnsureRolesExist(app);
+            
 
             //Creating an Admin User
             AppIdentityDbContext context = app.ApplicationServices
@@ -20,6 +20,7 @@ namespace VideoGamesReboot24.Models
             {
                 context.Database.Migrate();
             }
+            EnsureRolesExist(app);
             UserManager<IdentityUser> userManager = app.ApplicationServices
                 .CreateScope().ServiceProvider
                 .GetRequiredService<UserManager<IdentityUser>>();

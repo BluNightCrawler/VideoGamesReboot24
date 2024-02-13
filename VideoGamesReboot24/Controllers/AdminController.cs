@@ -38,11 +38,11 @@ namespace VideoGamesReboot24.Controllers
         [Route("Admin/EditUser/{id?}")]
         public async Task<IActionResult> EditUser(string id)
         {
-            if (id == null) return View("ManageUsers", getAllUsersWithRoles());
+            if (id == null) return View("ManageUsers", await getAllUsersWithRoles());
 
             IdentityUser retrievedUser = await userManager.FindByIdAsync(id);
 
-            if (retrievedUser == null) return View("ManageUsers", getAllUsersWithRoles());
+            if (retrievedUser == null) return View("ManageUsers", await getAllUsersWithRoles());
 
             IList<string> userRoles = await userManager.GetRolesAsync(retrievedUser);
 
@@ -65,9 +65,40 @@ namespace VideoGamesReboot24.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUser(UserWithRoles)
+        public async Task<IActionResult> EditUser(IFormCollection formData, UserWithRoles userWRole)
         {
+            IdentityUser user = await userManager.FindByIdAsync(userWRole.Id);
 
+            IList<string> rolesForUser = await userManager.GetRolesAsync(user);
+            
+            foreach (var kvp in formData)
+            {
+                string keyName = kvp.Key;
+                //check if keyname a role
+                if (await roleManager.RoleExistsAsync(keyName))
+                {
+                    bool roleUpdated = kvp.Value.Contains("true");
+                    //box is checked
+                    if (roleUpdated == true)
+                    {
+                        //if role doesnt exist already add it
+                        if (!rolesForUser.Contains(keyName))
+                        {
+                            await userManager.AddToRoleAsync(user, keyName);
+                        }
+                    }
+                    //box is unchecked
+                    else
+                    {
+                        //if role does exist already remove it
+                        if (rolesForUser.Contains(keyName))
+                        {
+                            await userManager.RemoveFromRoleAsync(user, keyName);
+                        }
+                    }
+                }
+            }
+            return View("ManageUsers", await getAllUsersWithRoles());
         }
 
         //helper method

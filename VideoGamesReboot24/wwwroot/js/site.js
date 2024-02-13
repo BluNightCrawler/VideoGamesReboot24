@@ -5,7 +5,7 @@
 $(document).ready(function () {
     $( ".nav-link" ).each(
         function (i, data) {
-            if (data.href == location.href) {
+            if (data.href == location.href || (location.href.startsWith(data.href) && data.href != location.origin+"/")) {
                 $(data).addClass("link-secondary");
             }
         }

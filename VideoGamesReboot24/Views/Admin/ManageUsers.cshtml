@@ -24,7 +24,19 @@
                     <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
-                    <td>@string.Join(",", user.RoleNames)</td>
+                    <td>
+                        @foreach (string role in user.RoleNames)
+                        {
+                            if (role == "Admin")
+                            {
+                                <span class="badge rounded-pill text-bg-primary">@role</span>
+                            }
+                            else
+                            {
+                                <span class="badge rounded-pill text-bg-secondary">@role</span>
+                            }
+                        }
+                    </td>
                     <td>
                         <a class="btn btn-primary btn-sm" asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Edit</a>
                     </td>

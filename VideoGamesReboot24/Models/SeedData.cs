@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Text.Json.Nodes;
 
 namespace VideoGamesReboot24.Models
 {
@@ -14,6 +16,8 @@ namespace VideoGamesReboot24.Models
             }
             if (!context.Products.Any())
             {
+                //string json = File.ReadAllText("test.json");
+                //VideoGame[]? videoGames = JsonConvert.DeserializeObject<VideoGame[]>(json);
                 context.Products.AddRange(
                 new VideoGame
                 {

@@ -37,6 +37,22 @@ namespace VideoGamesReboot24.Controllers
             });
 
 
+
+        [HttpGet]
+        [Route("Home/AboutUs")]
+        [Route("Products/AboutUs")]
+        public ViewResult AboutUs()
+        {
+            return View("AboutUs");
+        }
+        [HttpGet]
+        [Route("Home/Catalog")]
+        [Route("Products/Catalog")]
+        public ViewResult Catalog()
+        {
+            return View("Catalog");
+        }
+
         [HttpGet]
         [Route("Home/Create")]
         [Route("Products/Create")]

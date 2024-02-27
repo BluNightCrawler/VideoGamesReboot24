@@ -4,7 +4,7 @@
 }
 <DocType html>
 <div class="card" style="width: 15rem;">
-    <img src="~/Images/placeholder.jpg" class="card-img-top" alt="...">
+        <img src="@(Model.ImagePath == "" ? "/Images/placeholder.jpg" : @Url.Content(Model.ImagePath))" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">@Model.ProductName</h5>
         <h6 class="card-subtitle text-muted">@Model.Price.ToString("c")</h6>

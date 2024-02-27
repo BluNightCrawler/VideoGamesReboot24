@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Images\Game\" />
     <Folder Include="wwwroot\Images\Account\" />
   </ItemGroup>
 

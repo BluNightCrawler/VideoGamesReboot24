@@ -55,6 +55,20 @@ namespace VideoGamesReboot24.Controllers
         {
             if (!ModelState.IsValid) { return View(game); }
 
+            IFormFile uploadedImage = Request.Form.Files["Image"];
+            if (uploadedImage != null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
+                string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
+                string fullPath = Path.Combine(path, fileName);
+                uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
+                game.ImagePath = "~/Images/Game/" + fileName;
+            }
+            else
+            {
+                game.ImagePath = "";
+            }
+
             repository.CreateProduct(game);
 
             return View("VideoGameThanks", game);
@@ -93,7 +107,7 @@ namespace VideoGamesReboot24.Controllers
 
         [HttpPost]
         [Authorize(Policy = "AdminRestricted")]
-        public ActionResult Edit(VideoGame game, IFormFileCollection file)
+        public ActionResult Edit(VideoGame game)
         {
             if (!ModelState.IsValid) { return View("VideoGamesEdit", game); }
             

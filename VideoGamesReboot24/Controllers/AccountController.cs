@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Identity;
 using VideoGamesReboot24.Models;
 using VideoGamesReboot24.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VideoGamesReboot24.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<IdentityUser> signInManager;
-        private readonly UserManager<IdentityUser> userManager;
-        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        private readonly SignInManager<AppUser> signInManager;
+        private readonly UserManager<AppUser> userManager;
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
@@ -34,7 +35,7 @@ namespace VideoGamesReboot24.Controllers
             {
                 return View(credentials);
             }
-            IdentityUser user = await userManager.FindByNameAsync(credentials.UserName);
+            AppUser user = await userManager.FindByNameAsync(credentials.UserName);
             if (user == null) {
                 ModelState.AddModelError("", "Invalid UserName or Password");
                 return View("Login");
@@ -62,14 +63,14 @@ namespace VideoGamesReboot24.Controllers
         {
             if (!ModelState.IsValid) return View(registration);
 
-            IdentityUser user = await userManager.FindByNameAsync(registration.UserName);
+            AppUser user = await userManager.FindByNameAsync(registration.UserName);
 
             if (user != null) {
                 ModelState.AddModelError("", "Username Taken");
                 return View(registration); 
             }
 
-            user = new IdentityUser(registration.UserName);
+            user = new AppUser(registration.UserName);
             user.Email = registration.Email;
 
             var result = await userManager.CreateAsync(user, registration.Password);
@@ -96,6 +97,40 @@ namespace VideoGamesReboot24.Controllers
                     return View(registration);
                 }
             }
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "LoginRestricted")]
+        public async Task<IActionResult> Manage()
+        {
+            AppUser currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            UserAccount userAccount = new UserAccount()
+            {
+                Email = currentUser.Email,
+                UserName = currentUser.UserName,
+                ImagePath = currentUser.ImagePath,
+                IsAdmin = (await userManager.GetRolesAsync(currentUser)).Contains("Admin")
+            };
+            return View(userAccount);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "LoginRestricted")]
+        public async Task<IActionResult> Manage(UserAccount account)
+        {
+            AppUser currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            IFormFile uploadedImage = Request.Form.Files["Image"];
+            if (uploadedImage != null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
+                string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
+                string fullPath = Path.Combine(path, fileName);
+                uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
+
+                currentUser.ImagePath = "~/Images/Game/" + fileName;
+                await userManager.UpdateAsync(currentUser);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

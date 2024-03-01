@@ -6,19 +6,21 @@ using System.Data.SqlClient;
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace VideoGamesReboot24.Controllers
 {
     public class HomeController : Controller
     {
-        
+        private UserManager<AppUser> userManager;
         private IStoreRepository repository;
         //static List<SeedData> video ;
         public int PageSize = 8;
 
-        public HomeController(IStoreRepository repo)
+        public HomeController(IStoreRepository repo, UserManager<AppUser> userManager)
         {
             repository = repo;
+            this.userManager = userManager;
         }
 
         public ViewResult Index(string? category, int productPage = 1)
@@ -157,12 +159,22 @@ namespace VideoGamesReboot24.Controllers
 
             return RedirectToAction("Index");
         }
-        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        //helper
+        public string GetUserImage()
+        {
+            AppUser user = userManager.FindByNameAsync(User.Identity.Name).GetAwaiter().GetResult();
+            if (user.ImagePath == "")
+            {
+                return "~/Images/placeholder.jpg";
+            }
+            return user.ImagePath;
         }
        
     }

@@ -21,13 +21,13 @@ namespace VideoGamesReboot24.Models
                 context.Database.Migrate();
             }
             EnsureRolesExist(app);
-            UserManager<IdentityUser> userManager = app.ApplicationServices
+            UserManager<AppUser> userManager = app.ApplicationServices
                 .CreateScope().ServiceProvider
-                .GetRequiredService<UserManager<IdentityUser>>();
-            IdentityUser user = await userManager.FindByNameAsync(adminUser);
+                .GetRequiredService<UserManager<AppUser>>();
+            AppUser user = await userManager.FindByNameAsync(adminUser);
             if (user == null)
             {
-                user = new IdentityUser("Admin");
+                user = new AppUser("Admin");
                 user.Email = "admin@example.com";
                 user.PhoneNumber = "555-1234";
                 await userManager.CreateAsync(user, adminPassword);

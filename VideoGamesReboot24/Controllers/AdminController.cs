@@ -12,9 +12,9 @@ namespace VideoGamesReboot24.Controllers
     [Authorize(Policy = "AdminRestricted")]
     public class AdminController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        public AdminController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -40,7 +40,7 @@ namespace VideoGamesReboot24.Controllers
         {
             if (id == null) return View("ManageUsers", await getAllUsersWithRoles());
 
-            IdentityUser retrievedUser = await userManager.FindByIdAsync(id);
+            AppUser retrievedUser = await userManager.FindByIdAsync(id);
 
             if (retrievedUser == null) return View("ManageUsers", await getAllUsersWithRoles());
 
@@ -67,7 +67,7 @@ namespace VideoGamesReboot24.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(IFormCollection formData, UserWithRoles userWRole)
         {
-            IdentityUser user = await userManager.FindByIdAsync(userWRole.Id);
+            AppUser user = await userManager.FindByIdAsync(userWRole.Id);
 
             IList<string> rolesForUser = await userManager.GetRolesAsync(user);
             
@@ -106,7 +106,7 @@ namespace VideoGamesReboot24.Controllers
         {
             List<UserWithRoles> allUsers = new List<UserWithRoles>();
 
-            foreach (IdentityUser user in userManager.Users)
+            foreach (AppUser user in userManager.Users)
             {
 
                 UserWithRoles userModel = new UserWithRoles();

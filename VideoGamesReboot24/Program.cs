@@ -20,13 +20,16 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration["ConnectionStrings:IdentityConnection"]));
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppIdentityDbContext>();
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminRestricted", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("LoginRestricted", policy => policy.RequireRole("User"));
 });
+
+builder.Services.AddTransient<UserManager<AppUser>>();
 
 var app = builder.Build();
 

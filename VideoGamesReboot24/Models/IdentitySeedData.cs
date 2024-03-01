@@ -30,12 +30,17 @@ namespace VideoGamesReboot24.Models
                 user = new AppUser("Admin");
                 user.Email = "admin@example.com";
                 user.PhoneNumber = "555-1234";
+                user.PhoneNumber = "~/Images/placeholder.jpg";
                 await userManager.CreateAsync(user, adminPassword);
             }
             IList<string> roles = await userManager.GetRolesAsync(user);
             if (!roles.Contains("Admin"))
             {
                 await userManager.AddToRoleAsync(user, "Admin");
+            }
+            if (!roles.Contains("User"))
+            {
+                await userManager.AddToRoleAsync(user, "User");
             }
         }
 

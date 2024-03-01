@@ -25,20 +25,20 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Create">Add Game</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Create">Add Game</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
                             </li>
                         }
                     </ul>
                 </div>
-				<button type="button" class="btn btn-primary"><a asp-area="" asp-controller="Home" asp-action="Index">Search Bar</a></button>
+				<button type="button" class="btn btn-primary me-2"><a asp-area="" asp-controller="Home" asp-action="Index">Search Bar</a></button>
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Login</a>

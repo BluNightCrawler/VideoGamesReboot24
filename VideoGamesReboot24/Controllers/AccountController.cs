@@ -72,6 +72,7 @@ namespace VideoGamesReboot24.Controllers
 
             user = new AppUser(registration.UserName);
             user.Email = registration.Email;
+            user.ImagePath = "~/Images/placeholder.jpg";
 
             var result = await userManager.CreateAsync(user, registration.Password);
 
@@ -122,12 +123,12 @@ namespace VideoGamesReboot24.Controllers
             IFormFile uploadedImage = Request.Form.Files["Image"];
             if (uploadedImage != null)
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Account");
                 string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
                 string fullPath = Path.Combine(path, fileName);
                 uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
 
-                currentUser.ImagePath = "~/Images/Game/" + fileName;
+                currentUser.ImagePath = "~/Images/Account/" + fileName;
                 await userManager.UpdateAsync(currentUser);
             }
             return RedirectToAction("Index", "Home");

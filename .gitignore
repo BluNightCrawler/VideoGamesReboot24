@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# exclude everything in account images folder
+VideoGamesReboot24/wwwroot/Images/Account/*
+
+# exception to the rule
+!VideoGamesReboot24/wwwroot/Images/Account/.gitkeep 

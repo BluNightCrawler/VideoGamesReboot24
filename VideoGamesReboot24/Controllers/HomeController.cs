@@ -5,19 +5,22 @@ using VideoGamesReboot24.Models.ViewModels;
 using System.Data.SqlClient;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace VideoGamesReboot24.Controllers
 {
     public class HomeController : Controller
     {
-        
+        private UserManager<AppUser> userManager;
         private IStoreRepository repository;
         //static List<SeedData> video ;
         public int PageSize = 8;
 
-        public HomeController(IStoreRepository repo)
+        public HomeController(IStoreRepository repo, UserManager<AppUser> userManager)
         {
             repository = repo;
+            this.userManager = userManager;
         }
 
         public ViewResult Index(string? category, int productPage = 1)
@@ -40,6 +43,7 @@ namespace VideoGamesReboot24.Controllers
         [HttpGet]
         [Route("Home/Create")]
         [Route("Products/Create")]
+        [Authorize(Policy = "AdminRestricted")]
         public ViewResult Create()
         {
             return View("VideoGameForm");
@@ -48,9 +52,24 @@ namespace VideoGamesReboot24.Controllers
         [HttpPost]
         [Route("Home/Create")]
         [Route("Products/Create")]
+        [Authorize(Policy = "AdminRestricted")]
         public ViewResult VideoGameForm(VideoGame game)
         {
             if (!ModelState.IsValid) { return View(game); }
+
+            IFormFile uploadedImage = Request.Form.Files["Image"];
+            if (uploadedImage != null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
+                string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
+                string fullPath = Path.Combine(path, fileName);
+                uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
+                game.ImagePath = "~/Images/Game/" + fileName;
+            }
+            else
+            {
+                game.ImagePath = "";
+            }
 
             repository.CreateProduct(game);
 
@@ -76,6 +95,7 @@ namespace VideoGamesReboot24.Controllers
         [HttpGet]
         [Route("Home/Edit/{id?}")]
         [Route("Products/Edit/{id?}")]
+        [Authorize(Policy = "AdminRestricted")]
         public ActionResult Edit(long? id)
         {
             if (id == null) return (ViewResult)Error();
@@ -88,9 +108,11 @@ namespace VideoGamesReboot24.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminRestricted")]
         public ActionResult Edit(VideoGame game)
         {
             if (!ModelState.IsValid) { return View("VideoGamesEdit", game); }
+            
 
             VideoGame? gameEdit = repository.Products.FirstOrDefault(p => p.ProductID == game.ProductID);
 
@@ -102,6 +124,20 @@ namespace VideoGamesReboot24.Controllers
             gameEdit.Category = game.Category;
             gameEdit.System = game.System;
 
+            IFormFile uploadedImage = Request.Form.Files["Image"];
+            if (uploadedImage != null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
+                string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
+                string fullPath = Path.Combine(path, fileName);
+                uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
+                gameEdit.ImagePath = "~/Images/Game/" + fileName;
+            }
+            else
+            {
+                gameEdit.ImagePath = game.ImagePath == "$" ? "" : game.ImagePath;
+            }
+
             repository.SaveProduct(game);
 
             return RedirectToAction("Index");
@@ -110,6 +146,7 @@ namespace VideoGamesReboot24.Controllers
         [HttpGet]
         [Route("Home/Delete/{id?}")]
         [Route("Products/Delete/{id?}")]
+        [Authorize(Policy = "AdminRestricted")]
         public ActionResult Delete(long? id)
         {
             if (id == null) return (ViewResult)Error();
@@ -122,12 +159,22 @@ namespace VideoGamesReboot24.Controllers
 
             return RedirectToAction("Index");
         }
-        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        //helper
+        public string GetUserImage()
+        {
+            AppUser user = userManager.FindByNameAsync(User.Identity.Name).GetAwaiter().GetResult();
+            if (user.ImagePath == "")
+            {
+                return "~/Images/placeholder.jpg";
+            }
+            return user.ImagePath;
         }
        
     }

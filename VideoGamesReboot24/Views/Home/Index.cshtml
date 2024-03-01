@@ -4,6 +4,9 @@
     ViewData["Title"] = "Home";
 }
 <DocType html>
+<div id="categories" class="">
+    <vc:navigation-menu />
+</div>
 <div class="text-center">
     <h1 class="display-4">Welcome To Video Game Store</h1>
     <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Form for adding a videogame to the List</a>
@@ -13,15 +16,22 @@
 {
     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
         <div class="card" style="width: 15rem;">
-            <img src="~/Images/placeholder.jpg" class="card-img-top" alt="...">
+            <a asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID"><img src="@(p.ImagePath == "" ? "/Images/placeholder.jpg" : @Url.Content(p.ImagePath))" class="card-img-top" alt="..." height="250px"></a>
             <div class="card-body">
-                <h5 class="card-title">@p.ProductName</h5>
+                <a class=" text-decoration-none" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID"><h5 class="card-title">@p.ProductName</h5></a>
                 <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
-                <p class="card-text">@p.Description</p>
                 <td>
-                    <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a> |
-                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a> |
-                    <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a>
+                        <span> | </span>
+                    }
+                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span> | </span>
+                        <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
+                    }
                 </td>    
                 <hr/>
                 <a href="#" class="btn btn-primary">Add to Cart</a>

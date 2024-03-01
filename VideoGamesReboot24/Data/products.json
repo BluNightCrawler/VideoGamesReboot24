@@ -1,0 +1,335 @@
+﻿[
+  {
+    "ProductName": "Just Cause 2",
+    "Description": "Just Cause 2 is a 2010 action-adventure game developed by Avalanche Studios and published by Square Enix. The sequel to 2006's Just Cause.",
+    "Price": "14.99",
+    "Category": "Action",
+    "System": "Xbox 360",
+    "Active": true,
+    "ImagePath": "~/Images/Game/just-cause-2.png"
+  },
+  {
+    "ProductName": "Pokemon Silver",
+    "Description": "Pokemon Gold Version[a] and Pokemon Silver Version[b] are 1999 role-playing video games developed by Game Freak and published by Nintendo for the Game Boy Color.",
+    "Price": "50.00",
+    "Category": "RPG",
+    "System": "Game Boy Color",
+    "Active": true,
+    "ImagePath": "~/Images/Game/pokemon-silver.png"
+  },
+  {
+    "ProductName": "Metroid Prime",
+    "Description": "Metroid Prime is an action-adventure game developed by Retro Studios and published by Nintendo for the GameCube.",
+    "Price": "45.00",
+    "Category": "FPS",
+    "System": "Nintendo GameCube",
+    "Active": true,
+    "ImagePath": "~/Images/Game/metroid-prime.png"
+  },
+  {
+    "ProductName": "Super Mario Galaxy 2",
+    "Description": "Super Mario Galaxy 2 is a 2010 platform game developed and published by Nintendo for the Wii.",
+    "Price": "39.99",
+    "Category": "Platformer",
+    "System": "Nintendo Wii",
+    "Active": true,
+    "ImagePath": "~/Images/Game/super-mario-galaxy-2.png"
+  },
+  {
+    "ProductName": "Star Fox 64",
+    "Description": "Star Fox 64, known as Lylat Wars in the PAL regions, is a 1997 3D rail shooter video game developed and published by Nintendo for the Nintendo 64.",
+    "Price": "28.99",
+    "Category": "RPG",
+    "System": "Nintendo 64",
+    "Active": true,
+    "ImagePath": "~/Images/Game/star-fox-64.png"
+  },
+  {
+    "ProductName": "Life is Strange",
+    "Description": "Life Is Strange is an episodic adventure game developed by Dontnod Entertainment and published by Square Enix.",
+    "Price": "25.50",
+    "Category": "Adventure",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/life-is-strange.png"
+  },
+  {
+    "ProductName": "Stardew Valley",
+    "Description": "Stardew Valley is a 2016 farm life sim game developed by Eric \"ConcernedApe\" Barone. Players take the role of a character who inherits their deceased grandfather's dilapidated farm in a place known as Stardew Valley.",
+    "Price": "10.99",
+    "Category": "RPG",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/stardew-valley.png"
+  },
+  {
+    "ProductName": "Fire Emblem Awakening",
+    "Description": "Fire Emblem Awakening is a 2012 tactical role-playing game developed by Intelligent Systems and published by Nintendo for the Nintendo 3DS.",
+    "Price": "20.00",
+    "Category": "Turn-Based",
+    "System": "Nintendo DS",
+    "Active": true,
+    "ImagePath": "~/Images/Game/fire-emblem-awakening.png"
+  },
+  {
+    "ProductName": "Payday 2",
+    "Description": "Payday 2 is a cooperative first-person shooter video game developed by Overkill Software and published by 505 Games.",
+    "Price": "39.99",
+    "Category": "FPS",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/payday-2.png"
+  },
+  {
+    "ProductName": "Super Mario World",
+    "Description": "Super Mario World, known in Japanese marketing as Super Mario World: Super Mario Bros. 4, is a platform game developed by Nintendo EAD and published by Nintendo for the Super Nintendo Entertainment System.",
+    "Price": "29.99",
+    "Category": "Platformer",
+    "System": "Nintendo SNES",
+    "Active": true,
+    "ImagePath": "~/Images/Game/super-mario-world.png"
+  },
+  {
+    "ProductName": "Assassins Creed Brotherhood",
+    "Description": "Assassin's Creed: Brotherhood is a 2010 action-adventure video game developed by Ubisoft Montreal and published by Ubisoft.",
+    "Price": "39.99",
+    "Category": "Adventure",
+    "System": "Xbox 360",
+    "Active": true,
+    "ImagePath": "~/Images/Game/assassins-creed-brotherhood.png"
+  },
+  {
+    "ProductName": "Call of Duty: Modern Warfare III",
+    "Description": "Call of Duty: Modern Warfare III is a 2023 first-person shooter video game developed by Sledgehammer Games and published by Activision.",
+    "Price": "69.99",
+    "Category": "FPS",
+    "System": "PlayStation 5",
+    "Active": true,
+    "ImagePath": "~/Images/Game/call-of-duty-modern-warfare-3.png"
+  },
+  {
+    "ProductName": "Dentiny 2",
+    "Description": "Destiny 2 is a free-to-play online first-person shooter video game developed by Bungie.",
+    "Price": "100.00",
+    "Category": "FPS",
+    "System": "PlayStation 4",
+    "Active": true,
+    "ImagePath": "~/Images/Game/destiny-2.png"
+  },
+  {
+    "ProductName": "Final Fantasy X",
+    "Description": "Final Fantasy X is a role-playing video game developed and published by Square as the tenth main entry in the Final Fantasy series.",
+    "Price": "23.45",
+    "Category": "RPG",
+    "System": "PlayStation 2",
+    "Active": true,
+    "ImagePath": "~/Images/Game/final-fantasy-x.png"
+  },
+  {
+    "ProductName": "Saints Row IV",
+    "Description": "Saints Row IV is a 2013 action-adventure game developed by Volition and published by Deep Silver. ",
+    "Price": "44.44",
+    "Category": "Action",
+    "System": "Xbox One",
+    "Active": true,
+    "ImagePath": "~/Images/Game/saints-row-iv.png"
+  },
+  {
+    "ProductName": "Quantum Break",
+    "Description": "Quantum Break is a 2016 action-adventure third-person shooter video game developed by Remedy Entertainment and published by Microsoft Studios for Windows and Xbox One.",
+    "Price": "25.00",
+    "Category": "Action",
+    "System": "Xbox One",
+    "Active": true,
+    "ImagePath": "~/Images/Game/quantum-break.png"
+  },
+  {
+    "ProductName": "Hitman: Blood Money",
+    "Description": "Hitman: Blood Money is a 2006 stealth video game developed by IO Interactive and published by Eidos Interactive.",
+    "Price": "49.99",
+    "Category": "FPS",
+    "System": "PlayStation 2",
+    "Active": true,
+    "ImagePath": "~/Images/Game/hitman-blood-money.png"
+  },
+  {
+    "ProductName": "Darkest Dungeon",
+    "Description": "Darkest Dungeon is a roguelike role-playing video game developed and published by Red Hook Studios.",
+    "Price": "19.99",
+    "Category": "Roguelike",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/darkest-dungeon.png"
+  },
+  {
+    "ProductName": "Gears of War",
+    "Description": "Gears of War is a media franchise centered on a series of video games created by Epic Games, developed and managed by The Coalition, and owned and published by Xbox Game Studios.",
+    "Price": "39.99",
+    "Category": "Third-Person",
+    "System": "Xbox 360",
+    "Active": true,
+    "ImagePath": "~/Images/Game/gears-of-war.png"
+  },
+  {
+    "ProductName": "The Elder Scrolls IV: Oblivion",
+    "Description": "The Elder Scrolls IV: Oblivion is an open-world action role-playing video game developed by Bethesda Game Studios, and co-published by Bethesda Softworks, 2K Games and Ubisoft.",
+    "Price": "49.99",
+    "Category": "Adventure",
+    "System": "PlayStation 3",
+    "Active": true,
+    "ImagePath": "~/Images/Game/the-elder-scrolls-iv-oblivion.png"
+  },
+  {
+    "ProductName": "Spore",
+    "Description": "Spore is a 2008 life simulation real-time strategy god game developed by Maxis and published by Electronic Arts for Microsoft Windows and Mac OS X.",
+    "Price": "100.00",
+    "Category": "RTS",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/spore.png"
+  },
+  {
+    "ProductName": "The Binding of Isaac Rebirth",
+    "Description": "The Binding of Isaac: Rebirth is a roguelike indie game designed by Edmund McMillen and developed and published by Nicalis.",
+    "Price": "10.00",
+    "Category": "Roguelike",
+    "System": "Xbox One",
+    "Active": true,
+    "ImagePath": "~/Images/Game/the-binding-of-isaac-rebirth.png"
+  },
+  {
+    "ProductName": "Forza Horizon 3",
+    "Description": "Forza Horizon 3 is a 2016 racing video game developed by Playground Games and published by Microsoft Studios for the Xbox One and Windows.",
+    "Price": "39.99",
+    "Category": "Racing",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/forza-horizon-3.png"
+  },
+  {
+    "ProductName": "Mario Kart 64",
+    "Description": "Mario Kart 64 is a kart racing video game developed and published by Nintendo for the Nintendo 64.",
+    "Price": "50.00",
+    "Category": "Racing",
+    "System": "Nintendo 64",
+    "Active": true,
+    "ImagePath": "~/Images/Game/mario-kart-64.png"
+  },
+  {
+    "ProductName": "Guitar Hero",
+    "Description": "Guitar Hero is a series of music rhythm game video games first released in 2005, in which players use a guitar-shaped game controller to simulate playing primarily lead, bass, and rhythm guitar across numerous songs.",
+    "Price": "40.00",
+    "Category": "Rythm",
+    "System": "Xbox 360",
+    "Active": true,
+    "ImagePath": "~/Images/Game/guitar-hero.png"
+  },
+  {
+    "ProductName": "Super Mario 3D Land",
+    "Description": "Super Mario 3D Land is a 2011 platform game in the Super Mario series developed and published by Nintendo for their Nintendo 3DS handheld game console.",
+    "Price": "10.00",
+    "Category": "Platformer",
+    "System": "Nintendo DS",
+    "Active": true,
+    "ImagePath": "~/Images/Game/super-mario-3d-land.png"
+  },
+  {
+    "ProductName": "Pokemon FireRed",
+    "Description": "Pokemon FireRed Version and Pokemon LeafGreen Version are 2004 remakes of the 1996 role-playing video games Pokemon Red and Blue.",
+    "Price": "55.55",
+    "Category": "RPG",
+    "System": "Game Boy Advanced",
+    "Active": true,
+    "ImagePath": "~/Images/Game/pokemon-firered.png"
+  },
+  {
+    "ProductName": "Portal 2",
+    "Description": "Portal is a 2007 puzzle-platform game developed and published by Valve.",
+    "Price": "9.99",
+    "Category": "Platformer",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/portal-2.png"
+  },
+  {
+    "ProductName": "Dragon Age: Origins – Awakening",
+    "Description": "Dragon Age: Origins – Awakening is the expansion for the role-playing video game Dragon Age: Origins.",
+    "Price": "5.99",
+    "Category": "RPG",
+    "System": "Xbox 360",
+    "Active": true,
+    "ImagePath": "~/Images/Game/dragon-age-origins-awakening.png"
+  },
+  {
+    "ProductName": "Fallout 2",
+    "Description": "Fallout 2: A Post Nuclear Role Playing Game is a 1998 role-playing video game developed by Black Isle Studios and published by Interplay Productions.",
+    "Price": "44.44",
+    "Category": "RPG",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/fallout-2.png"
+  },
+  {
+    "ProductName": "Borderlands 2",
+    "Description": "Borderlands 2 is a 2012 action role-playing first-person shooter video game developed by Gearbox Software and published by 2K.",
+    "Price": "39.99",
+    "Category": "FPS",
+    "System": "PlayStation 3",
+    "Active": true,
+    "ImagePath": "~/Images/Game/borderlands-2.png"
+  },
+  {
+    "ProductName": "Lego Star Wars II: The Original Trilogy",
+    "Description": "Lego Star Wars II: The Original Trilogy is a 2006 Lego-themed action-adventure game developed by Traveller's Tales and published by LucasArts and TT Games Publishing.",
+    "Price": "29.99",
+    "Category": "Adventure",
+    "System": "Xbox 360",
+    "Active": true,
+    "ImagePath": "~/Images/Game/lego-star-wars-ii-the-original-trilogy.png"
+  },
+  {
+    "ProductName": "The Elder Scrolls Online",
+    "Description": "The Elder Scrolls Online, abbreviated ESO, is a massively multiplayer online role-playing game developed by ZeniMax Online Studios and published by Bethesda Softworks.",
+    "Price": "49.99",
+    "Category": "RPG",
+    "System": "Xbox One",
+    "Active": true,
+    "ImagePath": "~/Images/Game/the-elder-scrolls-online.png"
+  },
+  {
+    "ProductName": "PlayerUnknown's Battlegrounds",
+    "Description": "PUBG: Battlegrounds is a battle royale game developed by PUBG Studios and published by Krafton.",
+    "Price": "49.00",
+    "Category": "FPS",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/playerunknowns-battlegrounds.png"
+  },
+  {
+    "ProductName": "Doom",
+    "Description": "Doom is a first-person shooter game developed and published by id Software. Released on December 10, 1993, for DOS, it is the first installment in the Doom franchise.",
+    "Price": "10.00",
+    "Category": "FPS",
+    "System": "PC",
+    "Active": true,
+    "ImagePath": "~/Images/Game/doom-1993.png"
+  },
+  {
+    "ProductName": "BioShock Infinite",
+    "Description": "BioShock Infinite is a first-person shooter video game in the BioShock series, developed by Irrational Games and published by 2K.",
+    "Price": "30.00",
+    "Category": "FPS",
+    "System": "Xbox 360",
+    "Active": true,
+    "ImagePath": "~/Images/Game/bioshock-infinite.png"
+  },
+  {
+    "ProductName": "Fallout 4",
+    "Description": "Fallout 4 is a 2015 action role-playing game developed by Bethesda Game Studios and published by Bethesda Softworks.",
+    "Price": "100.00",
+    "Category": "RPG",
+    "System": "Xbox One",
+    "Active": true,
+    "ImagePath": "~/Images/Game/fallout-4.png"
+  }
+]

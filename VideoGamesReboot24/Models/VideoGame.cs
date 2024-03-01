@@ -20,6 +20,7 @@ namespace VideoGamesReboot24.Models
 
         [Required(ErrorMessage = "Please enter a System")]
         public string System { get; set; }
+        public string ImagePath { get; set; }
         public bool Active { get; set; }
     }
 }

@@ -22,8 +22,12 @@ namespace VideoGamesReboot24.Controllers
             repository = repo;
             this.userManager = userManager;
         }
+        public ViewResult Index()
+        {
+            return View();
+        }
 
-        public ViewResult Index(string? category, int productPage = 1)
+        public ViewResult Catalog(string? category, int productPage = 1)
             => View(new VideoGameListViewModel {
                 VideoGames = repository.Products
                     .Where(p => category == null || p.Category == category)
@@ -42,18 +46,10 @@ namespace VideoGamesReboot24.Controllers
 
 
         [HttpGet]
-        [Route("Home/AboutUs")]
-        [Route("Products/AboutUs")]
+        [Route("AboutUs")]
         public ViewResult AboutUs()
         {
             return View("AboutUs");
-        }
-        [HttpGet]
-        [Route("Home/Catalog")]
-        [Route("Products/Catalog")]
-        public ViewResult Catalog()
-        {
-            return View("Catalog");
         }
 
         [HttpGet]
@@ -88,12 +84,11 @@ namespace VideoGamesReboot24.Controllers
             repository.CreateProduct(game);
 
             TempData["NewGame"] = true;
-            return RedirectToAction("Index");
+            return RedirectToAction("Catalog");
 
         }
 
         [HttpGet]
-        [Route("Home/Details/{id?}")]
         [Route("Products/Details/{id?}")]
         public ViewResult Details(long? id)
         {
@@ -108,7 +103,6 @@ namespace VideoGamesReboot24.Controllers
 
 
         [HttpGet]
-        [Route("Home/Edit/{id?}")]
         [Route("Products/Edit/{id?}")]
         [Authorize(Policy = "AdminRestricted")]
         public ActionResult Edit(long? id)
@@ -155,11 +149,10 @@ namespace VideoGamesReboot24.Controllers
 
             repository.SaveProduct(game);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Catalog");
         }
 
         [HttpGet]
-        [Route("Home/Delete/{id?}")]
         [Route("Products/Delete/{id?}")]
         [Authorize(Policy = "AdminRestricted")]
         public ActionResult Delete(long? id)
@@ -172,7 +165,7 @@ namespace VideoGamesReboot24.Controllers
 
             repository.DeleteProduct(game);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Catalog");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

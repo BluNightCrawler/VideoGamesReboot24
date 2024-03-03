@@ -1,12 +1,58 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model VideoGameListViewModel
+
 @{
+    ViewData["Title"] = "Catalog";
 }
-<DocType html> 
-    <h3>Catalog</h3>
+<DocType html>
+<div id="categories" class="">
+    <vc:navigation-menu />
+</div>
+@if (TempData.ContainsKey("NewGame"))
+{
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div class="toast align-items-center text-bg-primary border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Successfully Created Game!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    TempData.Clear();
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome To Video Game Store</h1>
+    <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Form for adding a videogame to the List</a>
+</div>
+<div class="row mt-3 mb-3">
+@foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGame>())
+{
+    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
+        <div class="card" style="width: 15rem;">
+            <a asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID"><img src="@(p.ImagePath == "" ? "/Images/placeholder.jpg" : @Url.Content(p.ImagePath))" class="card-img-top" alt="..." height="250px"></a>
+            <div class="card-body">
+                <a class=" text-decoration-none" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID"><h5 class="card-title">@p.ProductName</h5></a>
+                <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a>
+                        <span> | </span>
+                    }
+                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span> | </span>
+                        <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
+                    }
+                </td>    
+                <hr/>
+                <a href="#" class="btn btn-primary">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+}
+</div>
 
-
-
-
-    </DocType>
+    <div page-model="@Model?.PagingInfo" page-action="Catalog" page-url-category="@Model?.CurrentCategory!"></div>

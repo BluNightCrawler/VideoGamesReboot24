@@ -57,7 +57,6 @@ namespace VideoGamesReboot24.Controllers
         }
 
         [HttpGet]
-        [Route("Home/Create")]
         [Route("Products/Create")]
         [Authorize(Policy = "AdminRestricted")]
         public ViewResult Create()
@@ -66,10 +65,9 @@ namespace VideoGamesReboot24.Controllers
         }
 
         [HttpPost]
-        [Route("Home/Create")]
         [Route("Products/Create")]
         [Authorize(Policy = "AdminRestricted")]
-        public ViewResult VideoGameForm(VideoGame game)
+        public ActionResult VideoGameForm(VideoGame game)
         {
             if (!ModelState.IsValid) { return View(game); }
 
@@ -89,7 +87,8 @@ namespace VideoGamesReboot24.Controllers
 
             repository.CreateProduct(game);
 
-            return View("VideoGameThanks", game);
+            TempData["NewGame"] = true;
+            return RedirectToAction("Index");
 
         }
 

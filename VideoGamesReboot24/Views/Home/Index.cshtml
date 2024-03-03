@@ -7,6 +7,20 @@
 <div id="categories" class="">
     <vc:navigation-menu />
 </div>
+@if (TempData.ContainsKey("NewGame"))
+{
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div class="toast align-items-center text-bg-primary border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Successfully Created Game!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    TempData.Clear();
+}
 <div class="text-center">
     <h1 class="display-4">Welcome To Video Game Store</h1>
     <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Form for adding a videogame to the List</a>
@@ -40,4 +54,5 @@
     </div>
 }
 </div>
-<div page-model="@Model?.PagingInfo" page-action="Index" page-url-category="@Model?.CurrentCategory!"></div>
+
+    <div page-model="@Model?.PagingInfo" page-action="Index" page-url-category="@Model?.CurrentCategory!"></div>

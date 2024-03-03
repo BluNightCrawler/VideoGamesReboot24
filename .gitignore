@@ -364,6 +364,8 @@ FodyWeavers.xsd
 
 # exclude everything in account images folder
 VideoGamesReboot24/wwwroot/Images/Account/*
-
-# exception to the rule
+# keep the folder there
 !VideoGamesReboot24/wwwroot/Images/Account/.gitkeep 
+
+# exclude all the new images the user uploads for games
+VideoGamesReboot24/wwwroot/Images/Game/*

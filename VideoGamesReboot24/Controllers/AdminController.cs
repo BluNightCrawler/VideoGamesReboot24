@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using VideoGamesReboot24.Models;
 using VideoGamesReboot24.Models.ViewModels;
+using VideoGamesReboot24.Infrastructure;
+using Newtonsoft.Json.Linq;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -14,17 +17,19 @@ namespace VideoGamesReboot24.Controllers
     {
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        public AdminController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly GameStoreDbContext gameStoreDbContext;
+        public AdminController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, GameStoreDbContext gameStoreDbContext)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.gameStoreDbContext = gameStoreDbContext;
         }
 
         //[Route("Admin/Index")]
         [Route("Admin")]
         public IActionResult Index()
         {
-            return View();
+            return getIndexView();
         }
 
         [HttpGet]
@@ -100,8 +105,22 @@ namespace VideoGamesReboot24.Controllers
             }
             return View("ManageUsers", await getAllUsersWithRoles());
         }
+        [HttpGet]
+        public ActionResult UpdateAccessToken()
+        {
+            ApiHelper apiHelper = new ApiHelper(gameStoreDbContext, "IGDB");
+            if (!apiHelper.accessTokenValid())
+            {
+                var jObject = JObject.Parse(System.IO.File.ReadAllText("credentials.json"));
+                JObject twitchCredentials = (JObject)jObject["twitchCredentials"];
+                string clientID = (string)twitchCredentials["clientID"];
+                string clientSecret = (string)twitchCredentials["clientSecret"];
+                apiHelper.updateAccessToken(clientID, clientSecret);
+            }
+            return getIndexView();
+        }
 
-        //helper method
+        //helper methods
         public async Task<List<UserWithRoles>> getAllUsersWithRoles()
         {
             List<UserWithRoles> allUsers = new List<UserWithRoles>();
@@ -118,6 +137,18 @@ namespace VideoGamesReboot24.Controllers
                 allUsers.Add(userModel);
             }
             return allUsers;
+        }
+
+        private ViewResult getIndexView()
+        {
+            ApiHelper apiHelper = new ApiHelper(gameStoreDbContext, "IGDB");
+            if (apiHelper.accessTokenValid())
+            {
+                AccessTokenExpireDate expireDate = new AccessTokenExpireDate();
+                expireDate.expirationDate = apiHelper.getApiAccessToken().ExpirationTime;
+                return View("Index", expireDate);
+            }
+            return View("Index", null);
         }
     }
 }

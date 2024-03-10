@@ -369,3 +369,6 @@ VideoGamesReboot24/wwwroot/Images/Account/*
 
 # exclude all the new images the user uploads for games
 VideoGamesReboot24/wwwroot/Images/Game/*
+
+# exclude Twitch API Credentials
+VideoGamesReboot24/credentials.json

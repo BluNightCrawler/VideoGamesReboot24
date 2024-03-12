@@ -21,10 +21,7 @@
     </div>
     TempData.Clear();
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome To Video Game Store</h1>
-    <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Form for adding a videogame to the List</a>
-</div>
+<a class="btn btn-primary" asp-controller="Home" asp-action="Import">Import More Games!</a>
 <div class="row mt-3 mb-3">
 @foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGame>())
 {

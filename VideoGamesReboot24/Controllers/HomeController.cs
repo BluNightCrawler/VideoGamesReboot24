@@ -7,6 +7,9 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using VideoGamesReboot24.Infrastructure;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -14,13 +17,15 @@ namespace VideoGamesReboot24.Controllers
     {
         private UserManager<AppUser> userManager;
         private IStoreRepository repository;
+        private GameStoreDbContext gameStoreDbContext;
         //static List<SeedData> video ;
         public int PageSize = 8;
 
-        public HomeController(IStoreRepository repo, UserManager<AppUser> userManager)
+        public HomeController(IStoreRepository repo, UserManager<AppUser> userManager, GameStoreDbContext context)
         {
             repository = repo;
             this.userManager = userManager;
+            this.gameStoreDbContext = context;
         }
         public ViewResult Index()
         {
@@ -43,7 +48,13 @@ namespace VideoGamesReboot24.Controllers
                 CurrentCategory = category
             });
 
-
+        [HttpGet]
+        [Route("Products/Catalog/Import")]
+        [Authorize(Policy = "AdminRestricted")]
+        public ViewResult Import()
+        {
+            return View("CatalogImport", new List<VideoGameFull>());
+        }
 
         [HttpGet]
         [Route("AboutUs")]
@@ -167,6 +178,44 @@ namespace VideoGamesReboot24.Controllers
 
             return RedirectToAction("Catalog");
         }
+
+        [HttpPost]
+        [Authorize(Policy = "AdminRestricted")]
+        public ActionResult Search()
+        {
+            List<VideoGameFull> searchList = new List<VideoGameFull>();
+            ApiHelper apiHelper = new ApiHelper(gameStoreDbContext, "IGDB");
+            if ((string)Request.Form["SearchString"] == "")
+            {
+                ModelState.AddModelError(string.Empty, "Please input a search term.");
+                return View("CatalogImport", searchList);
+            }
+
+            searchList = apiHelper.SearchVideoGame((string)Request.Form["SearchString"]);
+            
+            return View("CatalogImport", searchList);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "AdminRestricted")]
+        [Route("Home/AddToCatalog/{name}")]
+        public ActionResult AddToCatalog(string name)
+        {
+            ApiHelper apiHelper = new ApiHelper(gameStoreDbContext, "IGDB");
+            if (gameStoreDbContext.VideoGames.Where(v => v.Name == name).Any())
+            {
+                ModelState.AddModelError(string.Empty, "Game Already Exists in DB");
+                return View("CatalogImport", new List<VideoGameFull>());
+            }
+            VideoGameFull? game = apiHelper.GetVideoGame(name);
+            if (game is not null)
+            {
+                gameStoreDbContext.VideoGames.Add(game);
+                gameStoreDbContext.SaveChanges();
+            }
+            return View("CatalogImport", new List<VideoGameFull>());
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

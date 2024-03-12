@@ -22,15 +22,15 @@ namespace VideoGamesReboot24.Models
             }
             if (!context.VideoGames.Any())
             {
-                context.VideoGames.Add(
-                    new VideoGameFull
-                    {
-                        Name = "Game1",
-                        Description = "Test",
-                        Price = 19.99,
-                        Systems = context.Systems.Where(s => s.Name == "Game Boy" || s.Name == "Xbox 360").ToList()
-                    }
-                );
+                //context.VideoGames.Add(
+                //    new VideoGameFull
+                //    {
+                //        Name = "Game1",
+                //        Description = "Test",
+                //        Price = 19.99,
+                //        Systems = context.Systems.Where(s => s.Name == "Game Boy" || s.Name == "Xbox 360").ToList()
+                //    }
+                //);
             }
 
             if (!context.Categories.Any())

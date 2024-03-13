@@ -23,33 +23,61 @@
 }
 <a class="btn btn-primary" asp-controller="Home" asp-action="Import">Import More Games!</a>
 <div class="row mt-3 mb-3">
-@foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGame>())
+@foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGameFull>())
 {
     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
-        <div class="card" style="width: 15rem;">
-            <a asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID"><img src="@(p.ImagePath == "" ? "/Images/placeholder.jpg" : @Url.Content(p.ImagePath))" class="card-img-top" alt="..." height="250px"></a>
+        <div class="card" style="width: 20rem;">
+            <img src="@Url.Content(p.ImagePath)" class="card-img-top" alt="..." height="250px">
             <div class="card-body">
-                <a class=" text-decoration-none" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID"><h5 class="card-title">@p.ProductName</h5></a>
+                <h5 class="card-title">@p.Name</h5>
                 <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
+                <ul class="list-group list-group-flush">
+                    @if (p.ReleaseDate is not null)
+                    {
+                        <li class="list-group-item">Release Date: @p.ReleaseDate.Value.ToShortDateString()</li>
+                    }
+                    @if (p.Rating is not null)
+                    {
+                        <li class="list-group-item">Rating: @string.Format("{0:0.0}", p.Rating.Value) (@p.RatingCount)</li>
+                    }
+                    @if (p.Systems.Count > 0)
+                    {
+                        <li class="list-group-item">
+                            <span>Systems: </span>
+                            @foreach (var s in p.Systems)
+                            {
+                                <span class="badge rounded-pill bg-primary">@s.Name</span>
+                            }
+                        </li>
+                    }
+                    @if (p.Categories.Count > 0)
+                    {
+                        <li class="list-group-item">
+                            <span>Categories: </span>
+                            @foreach (var c in p.Categories)
+                            {
+                                <span class="badge rounded-pill bg-secondary">@c.Name</span>
+                            }
+                        </li>
+                    }
+                </ul>
+                <hr />
                 <td>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a>
-                        <span> | </span>
-                    }
-                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductID">Details</a>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <span> | </span>
-                        <a class="" asp-controller="Products" asp-action="Delete" asp-route-id="@p.ProductID">Delete</a>
-                    }
-                </td>    
-                <hr/>
-                <a href="#" class="btn btn-primary">Add to Cart</a>
+                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.Id">Details</a> 
+                @if (User.IsInRole("Admin"))
+                {
+                    <span> | </span>
+                    <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.Id">Edit</a>
+                    <span> | </span>
+                    @Html.ActionLink("Delete", "Delete", new { id = p.Id }, new { onclick = "return confirm('Are you sure you want to delete this Game?')" })
+                    <hr />
+                }
+                </td>
+                <a class="btn btn-primary">Add to Cart</a>
             </div>
         </div>
     </div>
 }
 </div>
 
-    <div page-model="@Model?.PagingInfo" page-action="Catalog" page-url-category="@Model?.CurrentCategory!"></div>
+<div page-model="@Model?.PagingInfo" page-action="Catalog" page-url-category="@Model?.CurrentCategory!"></div>

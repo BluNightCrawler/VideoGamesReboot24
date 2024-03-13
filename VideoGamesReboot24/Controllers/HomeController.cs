@@ -35,15 +35,17 @@ namespace VideoGamesReboot24.Controllers
         public ViewResult Catalog(string? category, int productPage = 1)
             => View(new VideoGameListViewModel {
                 VideoGames = repository.Products
-                    .Where(p => category == null || p.Category == category)
-                    .OrderBy(p => p.ProductID)
+                    .Include(p => p.Categories)
+                    .Include(p => p.Systems)
+                    .Where(p => category == null || p.Categories.Any(c => c.Name == category))
+                    .OrderBy(p => p.Id)
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize),
                 PagingInfo = new PagingInfo {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = (category==null? repository.Products.Count() :
-                        repository.Products.Where(e => e.Category == category).Count())
+                    TotalItems = category==null? repository.Products.Count() :
+                        repository.Products.Where(p => p.Categories.Any(c => c.Name == category)).Count()
                 },
                 CurrentCategory = category
             });
@@ -92,7 +94,7 @@ namespace VideoGamesReboot24.Controllers
                 game.ImagePath = "";
             }
 
-            repository.CreateProduct(game);
+            //repository.CreateProduct(game);
 
             TempData["NewGame"] = true;
             return RedirectToAction("Catalog");
@@ -105,7 +107,7 @@ namespace VideoGamesReboot24.Controllers
         {
             if (id == null) return (ViewResult)Error();
 
-            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
+            VideoGameFull? game = repository.Products.Include(p => p.Categories).Include(p => p.Systems).FirstOrDefault(p => p.Id == id);
 
             if (game == null) return (ViewResult)Error();
 
@@ -120,48 +122,56 @@ namespace VideoGamesReboot24.Controllers
         {
             if (id == null) return (ViewResult)Error();
 
-            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
+            VideoGameFull? game = repository.Products.FirstOrDefault(p => p.Id == id);
 
             if (game == null) return (ViewResult)Error();
 
-            return View("VideoGamesEdit", game);
+
+            VideoGameWithCatsAndSys viewModel = new VideoGameWithCatsAndSys
+            {
+                VideoGame = game,
+                Categories = gameStoreDbContext.Categories.ToList(),
+                Systems = repository.Products.Include(x => x.Systems).SelectMany(x => x.Systems).ToList()
+            };
+
+            return View("VideoGamesEdit", viewModel);
         }
 
-        [HttpPost]
-        [Authorize(Policy = "AdminRestricted")]
-        public ActionResult Edit(VideoGame game)
-        {
-            if (!ModelState.IsValid) { return View("VideoGamesEdit", game); }
-            
+        //[HttpPost]
+        //[Authorize(Policy = "AdminRestricted")]
+        //public ActionResult Edit(VideoGameFull game)
+        //{
+        //    if (!ModelState.IsValid) { return View("VideoGamesEdit", game); }
 
-            VideoGame? gameEdit = repository.Products.FirstOrDefault(p => p.ProductID == game.ProductID);
 
-            if (gameEdit == null) return (ViewResult)Error();
+        //    VideoGameFull? gameEdit = repository.Products.FirstOrDefault(p => p.Id == game.ProductID);
 
-            gameEdit.ProductName = game.ProductName;
-            gameEdit.Price = game.Price;
-            gameEdit.Description = game.Description;
-            gameEdit.Category = game.Category;
-            gameEdit.System = game.System;
+        //    if (gameEdit == null) return (ViewResult)Error();
 
-            IFormFile uploadedImage = Request.Form.Files["Image"];
-            if (uploadedImage != null)
-            {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
-                string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
-                string fullPath = Path.Combine(path, fileName);
-                uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
-                gameEdit.ImagePath = "~/Images/Game/" + fileName;
-            }
-            else
-            {
-                gameEdit.ImagePath = game.ImagePath == "$" ? "" : game.ImagePath;
-            }
+        //    gameEdit.ProductName = game.ProductName;
+        //    gameEdit.Price = game.Price;
+        //    gameEdit.Description = game.Description;
+        //    gameEdit.Category = game.Category;
+        //    gameEdit.System = game.System;
 
-            repository.SaveProduct(game);
+        //    IFormFile uploadedImage = Request.Form.Files["Image"];
+        //    if (uploadedImage != null)
+        //    {
+        //        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
+        //        string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
+        //        string fullPath = Path.Combine(path, fileName);
+        //        uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
+        //        gameEdit.ImagePath = "~/Images/Game/" + fileName;
+        //    }
+        //    else
+        //    {
+        //        gameEdit.ImagePath = game.ImagePath == "$" ? "" : game.ImagePath;
+        //    }
 
-            return RedirectToAction("Catalog");
-        }
+        //    repository.SaveProduct(game);
+
+        //    return RedirectToAction("Catalog");
+        //}
 
         [HttpGet]
         [Route("Products/Delete/{id?}")]
@@ -170,7 +180,7 @@ namespace VideoGamesReboot24.Controllers
         {
             if (id == null) return (ViewResult)Error();
 
-            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
+            VideoGameFull? game = repository.Products.FirstOrDefault(p => p.Id == id);
 
             if (game == null) return (ViewResult)Error();
 
@@ -214,6 +224,32 @@ namespace VideoGamesReboot24.Controllers
                 gameStoreDbContext.SaveChanges();
             }
             return View("CatalogImport", new List<VideoGameFull>());
+        }
+
+        [HttpPost]
+        public ActionResult FilterSearch()
+        {
+            if ((string)Request.Form["SearchString"] == "")
+            {
+                return View("Catalog");
+            }
+
+            return View("Catalog", new VideoGameListViewModel
+            {
+                VideoGames = repository.Products
+                    .Include(p => p.Categories)
+                    .Include(p => p.Systems)
+                    .Where(p => p.Name.Contains((string)Request.Form["SearchString"]))
+                    .OrderBy(p => p.Id)
+                    .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = 1,
+                    ItemsPerPage = PageSize,
+                    TotalItems = repository.Products.Where(p => p.Name.Contains((string)Request.Form["SearchString"])).Count()
+                },
+                CurrentCategory = null
+            });
         }
 
 

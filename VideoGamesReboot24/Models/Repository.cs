@@ -7,18 +7,18 @@
         {
             context = ctx;
         }
-        public IQueryable<VideoGame> Products => context.Products;
-        public void CreateProduct(VideoGame game)
+        public IQueryable<VideoGameFull> Products => context.VideoGames;
+        public void CreateProduct(VideoGameFull game)
         {
             context.Add(game);
             context.SaveChanges();
         }
-        public void DeleteProduct(VideoGame game)
+        public void DeleteProduct(VideoGameFull game)
         {
             context.Remove(game);
             context.SaveChanges();
         }
-        public void SaveProduct(VideoGame game)
+        public void SaveProduct(VideoGameFull game)
         {
             context.SaveChanges();
         }

@@ -2,9 +2,9 @@
 {
     public interface IStoreRepository
     {
-        IQueryable<VideoGame> Products { get; }
-        void SaveProduct(VideoGame game);
-        void CreateProduct(VideoGame game);
-        void DeleteProduct(VideoGame game);
+        IQueryable<VideoGameFull> Products { get; }
+        void SaveProduct(VideoGameFull game);
+        void CreateProduct(VideoGameFull game);
+        void DeleteProduct(VideoGameFull game);
     }
 }

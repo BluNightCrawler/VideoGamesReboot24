@@ -3,11 +3,11 @@
     @foreach (string category in Model ?? Enumerable.Empty<string>())
     {
         <a class="btn @(category == ViewBag.SelectedCategory? "btn-primary": "btn-outline-secondary")"
-            asp-action="Index" asp-controller="Home" asp-route-category="@category" asp-route-productPage="1">
+            asp-action="Catalog" asp-controller="Home" asp-route-category="@category" asp-route-productPage="1">
                 @category
         </a>
     }
-    <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="Home" asp-route-category="">
+    <a class="btn btn-outline-secondary" asp-action="Catalog" asp-controller="Home" asp-route-category="">
         Reset
     </a>
 </div>

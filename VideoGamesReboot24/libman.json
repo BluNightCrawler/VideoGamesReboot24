@@ -5,6 +5,11 @@
     {
       "library": "bootstrap@5.3.1",
       "destination": "wwwroot/lib/bootstrap"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "chosen@1.8.7",
+      "destination": "wwwroot/lib/chosen/"
     }
   ]
 }

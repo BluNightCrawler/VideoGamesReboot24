@@ -2,8 +2,8 @@
 {
     public class VideoGameListViewModel
     {
-        public IEnumerable<VideoGame> VideoGames { get; set; }
-            = Enumerable.Empty<VideoGame>();
+        public IEnumerable<VideoGameFull> VideoGames { get; set; }
+            = Enumerable.Empty<VideoGameFull>();
         public PagingInfo PagingInfo { get; set; } = new();
         public string? CurrentCategory { get; set; }
     }

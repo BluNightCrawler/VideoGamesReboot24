@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VideoGamesReboot24.Models;
 
 namespace VideoGamesReboot24.Components
@@ -14,7 +15,9 @@ namespace VideoGamesReboot24.Components
         {
             ViewBag.SelectedCategory = RouteData?.Values["category"];
             return View(repository.Products
-                .Select(x => x.Category)
+                .Include(x => x.Categories)
+                .SelectMany(x => x.Categories)
+                .Select(x => x.Name)
                 .Distinct()
                 .OrderBy(x => x));
         }

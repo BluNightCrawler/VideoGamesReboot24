@@ -7,6 +7,10 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using VideoGamesReboot24.Infrastructure;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -14,50 +18,55 @@ namespace VideoGamesReboot24.Controllers
     {
         private UserManager<AppUser> userManager;
         private IStoreRepository repository;
+        private GameStoreDbContext gameStoreDbContext;
         //static List<SeedData> video ;
         public int PageSize = 8;
 
-        public HomeController(IStoreRepository repo, UserManager<AppUser> userManager)
+        public HomeController(IStoreRepository repo, UserManager<AppUser> userManager, GameStoreDbContext context)
         {
             repository = repo;
             this.userManager = userManager;
+            this.gameStoreDbContext = context;
+        }
+        public ViewResult Index()
+        {
+            return View();
         }
 
-        public ViewResult Index(string? category, int productPage = 1)
+        public ViewResult Catalog(string? category, int productPage = 1)
             => View(new VideoGameListViewModel {
                 VideoGames = repository.Products
-                    .Where(p => category == null || p.Category == category)
-                    .OrderBy(p => p.ProductID)
+                    .Include(p => p.Categories)
+                    .Include(p => p.Systems)
+                    .Where(p => category == null || p.Categories.Any(c => c.Name == category))
+                    .OrderBy(p => p.Id)
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize),
                 PagingInfo = new PagingInfo {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = (category==null? repository.Products.Count() :
-                        repository.Products.Where(e => e.Category == category).Count())
+                    TotalItems = category==null? repository.Products.Count() :
+                        repository.Products.Where(p => p.Categories.Any(c => c.Name == category)).Count()
                 },
                 CurrentCategory = category
             });
 
-
+        [HttpGet]
+        [Route("Products/Catalog/Import")]
+        [Authorize(Policy = "AdminRestricted")]
+        public ViewResult Import()
+        {
+            return View("CatalogImport", new List<VideoGameFull>());
+        }
 
         [HttpGet]
-        [Route("Home/AboutUs")]
-        [Route("Products/AboutUs")]
+        [Route("AboutUs")]
         public ViewResult AboutUs()
         {
             return View("AboutUs");
         }
-        [HttpGet]
-        [Route("Home/Catalog")]
-        [Route("Products/Catalog")]
-        public ViewResult Catalog()
-        {
-            return View("Catalog");
-        }
 
         [HttpGet]
-        [Route("Home/Create")]
         [Route("Products/Create")]
         [Authorize(Policy = "AdminRestricted")]
         public ViewResult Create()
@@ -66,10 +75,9 @@ namespace VideoGamesReboot24.Controllers
         }
 
         [HttpPost]
-        [Route("Home/Create")]
         [Route("Products/Create")]
         [Authorize(Policy = "AdminRestricted")]
-        public ViewResult VideoGameForm(VideoGame game)
+        public ActionResult VideoGameForm(VideoGame game)
         {
             if (!ModelState.IsValid) { return View(game); }
 
@@ -87,20 +95,20 @@ namespace VideoGamesReboot24.Controllers
                 game.ImagePath = "";
             }
 
-            repository.CreateProduct(game);
+            //repository.CreateProduct(game);
 
-            return View("VideoGameThanks", game);
+            TempData["NewGame"] = true;
+            return RedirectToAction("Catalog");
 
         }
 
         [HttpGet]
-        [Route("Home/Details/{id?}")]
         [Route("Products/Details/{id?}")]
         public ViewResult Details(long? id)
         {
             if (id == null) return (ViewResult)Error();
 
-            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
+            VideoGameFull? game = repository.Products.Include(p => p.Categories).Include(p => p.Systems).FirstOrDefault(p => p.Id == id);
 
             if (game == null) return (ViewResult)Error();
 
@@ -109,36 +117,87 @@ namespace VideoGamesReboot24.Controllers
 
 
         [HttpGet]
-        [Route("Home/Edit/{id?}")]
         [Route("Products/Edit/{id?}")]
         [Authorize(Policy = "AdminRestricted")]
         public ActionResult Edit(long? id)
         {
             if (id == null) return (ViewResult)Error();
 
-            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
+            VideoGameFull? game = repository.Products.Include(x=> x.Categories).Include(x=>x.Systems).FirstOrDefault(p => p.Id == id);
 
             if (game == null) return (ViewResult)Error();
 
-            return View("VideoGamesEdit", game);
+            List<SelectListItem> cats = new List<SelectListItem>();
+            List<SelectListItem> syss = new List<SelectListItem>();
+            List<SelectListItem> ageratings = new List<SelectListItem>();
+            foreach (var cat in gameStoreDbContext.Categories.ToList())
+            {
+                cats.Add(new SelectListItem
+                {
+                    Text = cat.Name,
+                    Value = cat.Id.ToString(),
+                    Selected = game.Categories.Contains(cat)
+                });
+            }
+            foreach (var sys in gameStoreDbContext.Systems.ToList())
+            {
+                syss.Add(new SelectListItem
+                {
+                    Text=sys.Name,
+                    Value = sys.Id.ToString(),
+                    Selected = game.Systems.Contains(sys)
+                });
+            }
+            var agerating = Enum.GetNames(typeof(Ratings));
+            for(int i = 0; i < agerating.Length; i++)
+            {
+                ageratings.Add(new SelectListItem
+                {
+                    Text = agerating[i],
+                    Value = agerating[i],
+                    Selected = game.AgeRating == agerating[i]
+                });
+            }
+
+            VideoGameWithCatsAndSys viewModel = new VideoGameWithCatsAndSys
+            {
+                VideoGame = game,
+                Categories = cats,
+                Systems = syss,
+                AgeRatings = ageratings
+            };
+
+            return View("VideoGamesEdit", viewModel);
         }
 
         [HttpPost]
         [Authorize(Policy = "AdminRestricted")]
-        public ActionResult Edit(VideoGame game)
+        public ActionResult Edit(VideoGameWithCatsAndSys gameModel)
         {
-            if (!ModelState.IsValid) { return View("VideoGamesEdit", game); }
+            ModelState.Remove("VideoGame.Systems");
+            ModelState.Remove("VideoGame.Categories");
+            ModelState.Remove("Categories");
+            ModelState.Remove("Systems");
+            ModelState.Remove("AgeRatings");
+            if (!ModelState.IsValid) { return View("VideoGamesEdit", gameModel); }
             
+            VideoGameFull game = gameModel.VideoGame;
 
-            VideoGame? gameEdit = repository.Products.FirstOrDefault(p => p.ProductID == game.ProductID);
+            VideoGameFull? gameEdit = repository.Products.Include(x=>x.Categories).Include(x=>x.Systems).FirstOrDefault(p => p.Id == game.Id);
 
             if (gameEdit == null) return (ViewResult)Error();
 
-            gameEdit.ProductName = game.ProductName;
-            gameEdit.Price = game.Price;
+            gameEdit.Name = game.Name;
             gameEdit.Description = game.Description;
-            gameEdit.Category = game.Category;
-            gameEdit.System = game.System;
+            gameEdit.Price = game.Price;
+            gameEdit.AgeRating = game.AgeRating;
+            gameEdit.LongImagePath = game.LongImagePath;
+            gameEdit.Rating = game.Rating;
+            gameEdit.RatingCount = game.RatingCount;
+            gameEdit.ReleaseDate = game.ReleaseDate;
+
+            gameEdit.Categories = gameStoreDbContext.Categories.Where(s => gameModel.CategoryIds.Contains(s.Id)).ToList();
+            gameEdit.Systems = gameStoreDbContext.Systems.Where(s => gameModel.SystemIds.Contains(s.Id)).ToList();
 
             IFormFile uploadedImage = Request.Form.Files["Image"];
             if (uploadedImage != null)
@@ -156,25 +215,88 @@ namespace VideoGamesReboot24.Controllers
 
             repository.SaveProduct(game);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Catalog");
         }
 
         [HttpGet]
-        [Route("Home/Delete/{id?}")]
         [Route("Products/Delete/{id?}")]
         [Authorize(Policy = "AdminRestricted")]
         public ActionResult Delete(long? id)
         {
             if (id == null) return (ViewResult)Error();
 
-            VideoGame? game = repository.Products.FirstOrDefault(p => p.ProductID == id);
+            VideoGameFull? game = repository.Products.FirstOrDefault(p => p.Id == id);
 
             if (game == null) return (ViewResult)Error();
 
             repository.DeleteProduct(game);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Catalog");
         }
+
+        [HttpPost]
+        [Authorize(Policy = "AdminRestricted")]
+        public ActionResult Search()
+        {
+            List<VideoGameFull> searchList = new List<VideoGameFull>();
+            ApiHelper apiHelper = new ApiHelper(gameStoreDbContext, "IGDB");
+            if ((string)Request.Form["SearchString"] == "")
+            {
+                ModelState.AddModelError(string.Empty, "Please input a search term.");
+                return View("CatalogImport", searchList);
+            }
+
+            searchList = apiHelper.SearchVideoGame((string)Request.Form["SearchString"]);
+            
+            return View("CatalogImport", searchList);
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "AdminRestricted")]
+        [Route("Home/AddToCatalog/{name}")]
+        public ActionResult AddToCatalog(string name)
+        {
+            ApiHelper apiHelper = new ApiHelper(gameStoreDbContext, "IGDB");
+            if (gameStoreDbContext.VideoGames.Where(v => v.Name == name).Any())
+            {
+                ModelState.AddModelError(string.Empty, "Game Already Exists in DB");
+                return View("CatalogImport", new List<VideoGameFull>());
+            }
+            VideoGameFull? game = apiHelper.GetVideoGame(name);
+            if (game is not null)
+            {
+                gameStoreDbContext.VideoGames.Add(game);
+                gameStoreDbContext.SaveChanges();
+            }
+            return View("CatalogImport", new List<VideoGameFull>());
+        }
+
+        [HttpPost]
+        public ActionResult FilterSearch()
+        {
+            if ((string)Request.Form["SearchString"] == "")
+            {
+                return View("Catalog");
+            }
+
+            return View("Catalog", new VideoGameListViewModel
+            {
+                VideoGames = repository.Products
+                    .Include(p => p.Categories)
+                    .Include(p => p.Systems)
+                    .Where(p => p.Name.Contains((string)Request.Form["SearchString"]))
+                    .OrderBy(p => p.Id)
+                    .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = 1,
+                    ItemsPerPage = PageSize,
+                    TotalItems = repository.Products.Where(p => p.Name.Contains((string)Request.Form["SearchString"])).Count()
+                },
+                CurrentCategory = null
+            });
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

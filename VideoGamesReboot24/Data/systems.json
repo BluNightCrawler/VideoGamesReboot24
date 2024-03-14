@@ -1,0 +1,617 @@
+[
+  {
+    "SystemName": "Commodore CDTV"
+  },
+  {
+    "SystemName": "Sega Pico"
+  },
+  {
+    "SystemName": "iOS"
+  },
+  {
+    "SystemName": "Commodore Plus/4"
+  },
+  {
+    "SystemName": "AY-3-8710"
+  },
+  {
+    "SystemName": "Odyssey"
+  },
+  {
+    "SystemName": "Commodore PET"
+  },
+  {
+    "SystemName": "Sol-20"
+  },
+  {
+    "SystemName": "Tapwave Zodiac"
+  },
+  {
+    "SystemName": "Texas Instruments TI-99"
+  },
+  {
+    "SystemName": "Acorn Electron"
+  },
+  {
+    "SystemName": "Gamate"
+  },
+  {
+    "SystemName": "Hyper Neo Geo 64"
+  },
+  {
+    "SystemName": "Thomson MO5"
+  },
+  {
+    "SystemName": "Odyssey 2 / Videopac G7000"
+  },
+  {
+    "SystemName": "SteamVR"
+  },
+  {
+    "SystemName": "PC-50X Family"
+  },
+  {
+    "SystemName": "AY-3-8607"
+  },
+  {
+    "SystemName": "AY-3-8605"
+  },
+  {
+    "SystemName": "AY-3-8606"
+  },
+  {
+    "SystemName": "Amstrad CPC"
+  },
+  {
+    "SystemName": "Playdate"
+  },
+  {
+    "SystemName": "Family Computer Disk System"
+  },
+  {
+    "SystemName": "WonderSwan Color"
+  },
+  {
+    "SystemName": "Neo Geo CD"
+  },
+  {
+    "SystemName": "Sega Game Gear"
+  },
+  {
+    "SystemName": "Atari Jaguar"
+  },
+  {
+    "SystemName": "3DO Interactive Multiplayer"
+  },
+  {
+    "SystemName": "Microvision"
+  },
+  {
+    "SystemName": "Turbografx-16/PC Engine CD"
+  },
+  {
+    "SystemName": "Dreamcast"
+  },
+  {
+    "SystemName": "Atari 8-bit"
+  },
+  {
+    "SystemName": "PC-9800 Series"
+  },
+  {
+    "SystemName": "PC Engine SuperGrafx"
+  },
+  {
+    "SystemName": "PC (Microsoft Windows)"
+  },
+  {
+    "SystemName": "PlayStation 2"
+  },
+  {
+    "SystemName": "Vectrex"
+  },
+  {
+    "SystemName": "Donner Model 30"
+  },
+  {
+    "SystemName": "PDP-8"
+  },
+  {
+    "SystemName": "DEC GT40"
+  },
+  {
+    "SystemName": "Microcomputer"
+  },
+  {
+    "SystemName": "Ferranti Nimrod Computer"
+  },
+  {
+    "SystemName": "Apple IIGS"
+  },
+  {
+    "SystemName": "DOS"
+  },
+  {
+    "SystemName": "SwanCrystal"
+  },
+  {
+    "SystemName": "Fairchild Channel F"
+  },
+  {
+    "SystemName": "Virtual Boy"
+  },
+  {
+    "SystemName": "TRS-80"
+  },
+  {
+    "SystemName": "Nintendo Switch"
+  },
+  {
+    "SystemName": "Amazon Fire TV"
+  },
+  {
+    "SystemName": "VC 4000"
+  },
+  {
+    "SystemName": "1292 Advanced Programmable Video System"
+  },
+  {
+    "SystemName": "Tatung Einstein"
+  },
+  {
+    "SystemName": "Nintendo DSi"
+  },
+  {
+    "SystemName": "Neo Geo Pocket"
+  },
+  {
+    "SystemName": "Dragon 32/64"
+  },
+  {
+    "SystemName": "Amstrad PCW"
+  },
+  {
+    "SystemName": "PDP-11"
+  },
+  {
+    "SystemName": "MSX2"
+  },
+  {
+    "SystemName": "Atari 7800"
+  },
+  {
+    "SystemName": "Sega CD"
+  },
+  {
+    "SystemName": "Game Boy Advance"
+  },
+  {
+    "SystemName": "Sega 32X"
+  },
+  {
+    "SystemName": "AY-3-8500"
+  },
+  {
+    "SystemName": "AY-3-8760"
+  },
+  {
+    "SystemName": "AY-3-8603"
+  },
+  {
+    "SystemName": "Neo Geo Pocket Color"
+  },
+  {
+    "SystemName": "Sharp X1"
+  },
+  {
+    "SystemName": "Web browser"
+  },
+  {
+    "SystemName": "CDC Cyber 70"
+  },
+  {
+    "SystemName": "OnLive Game System"
+  },
+  {
+    "SystemName": "Wii U"
+  },
+  {
+    "SystemName": "PC-8800 Series"
+  },
+  {
+    "SystemName": "Xbox"
+  },
+  {
+    "SystemName": "Acorn Archimedes"
+  },
+  {
+    "SystemName": "Amiga CD32"
+  },
+  {
+    "SystemName": "Philips CD-i"
+  },
+  {
+    "SystemName": "Sharp X68000"
+  },
+  {
+    "SystemName": "Nuon"
+  },
+  {
+    "SystemName": "Nintendo Entertainment System"
+  },
+  {
+    "SystemName": "AY-3-8610"
+  },
+  {
+    "SystemName": "Nintendo 3DS"
+  },
+  {
+    "SystemName": "Game Boy Color"
+  },
+  {
+    "SystemName": "Sega Master System/Mark III"
+  },
+  {
+    "SystemName": "PlayStation Portable"
+  },
+  {
+    "SystemName": "TurboGrafx-16/PC Engine"
+  },
+  {
+    "SystemName": "Oculus VR"
+  },
+  {
+    "SystemName": "Playdia"
+  },
+  {
+    "SystemName": "Mac"
+  },
+  {
+    "SystemName": "Satellaview"
+  },
+  {
+    "SystemName": "Sega Saturn"
+  },
+  {
+    "SystemName": "Commodore C64/128/MAX"
+  },
+  {
+    "SystemName": "Atari 5200"
+  },
+  {
+    "SystemName": "Intellivision"
+  },
+  {
+    "SystemName": "BlackBerry OS"
+  },
+  {
+    "SystemName": "Game & Watch"
+  },
+  {
+    "SystemName": "Imlac PDS-1"
+  },
+  {
+    "SystemName": "FM Towns"
+  },
+  {
+    "SystemName": "Nintendo PlayStation"
+  },
+  {
+    "SystemName": "NEC PC-6000 Series"
+  },
+  {
+    "SystemName": "FM-7"
+  },
+  {
+    "SystemName": "Nintendo DS"
+  },
+  {
+    "SystemName": "Atari ST/STE"
+  },
+  {
+    "SystemName": "PlayStation Vita"
+  },
+  {
+    "SystemName": "PlayStation 4"
+  },
+  {
+    "SystemName": "Atari Lynx"
+  },
+  {
+    "SystemName": "PlayStation 3"
+  },
+  {
+    "SystemName": "Commodore 16"
+  },
+  {
+    "SystemName": "Nintendo GameCube"
+  },
+  {
+    "SystemName": "N-Gage"
+  },
+  {
+    "SystemName": "Super Nintendo Entertainment System"
+  },
+  {
+    "SystemName": "Sharp MZ-2200"
+  },
+  {
+    "SystemName": "Super Famicom"
+  },
+  {
+    "SystemName": "Epoch Cassette Vision"
+  },
+  {
+    "SystemName": "Gear VR"
+  },
+  {
+    "SystemName": "PDP-10"
+  },
+  {
+    "SystemName": "New Nintendo 3DS"
+  },
+  {
+    "SystemName": "Plug & Play"
+  },
+  {
+    "SystemName": "WonderSwan"
+  },
+  {
+    "SystemName": "Commodore VIC-20"
+  },
+  {
+    "SystemName": "Apple II"
+  },
+  {
+    "SystemName": "Windows Phone"
+  },
+  {
+    "SystemName": "Neo Geo AES"
+  },
+  {
+    "SystemName": "SG-1000"
+  },
+  {
+    "SystemName": "Windows Mixed Reality"
+  },
+  {
+    "SystemName": "Neo Geo MVS"
+  },
+  {
+    "SystemName": "Game Boy"
+  },
+  {
+    "SystemName": "Epoch Super Cassette Vision"
+  },
+  {
+    "SystemName": "Intellivision Amico"
+  },
+  {
+    "SystemName": "PlayStation 5"
+  },
+  {
+    "SystemName": "Oculus Go"
+  },
+  {
+    "SystemName": "Oculus Rift"
+  },
+  {
+    "SystemName": "Bally Astrocade"
+  },
+  {
+    "SystemName": "Oculus Quest"
+  },
+  {
+    "SystemName": "BBC Microcomputer System"
+  },
+  {
+    "SystemName": "Legacy Mobile Device"
+  },
+  {
+    "SystemName": "Game.com"
+  },
+  {
+    "SystemName": "Arcade"
+  },
+  {
+    "SystemName": "Google Stadia"
+  },
+  {
+    "SystemName": "Wii"
+  },
+  {
+    "SystemName": "Ouya"
+  },
+  {
+    "SystemName": "PDP-1"
+  },
+  {
+    "SystemName": "TRS-80 Color Computer"
+  },
+  {
+    "SystemName": "Analogue electronics"
+  },
+  {
+    "SystemName": "Pokémon mini"
+  },
+  {
+    "SystemName": "EDSAC"
+  },
+  {
+    "SystemName": "HP 2100"
+  },
+  {
+    "SystemName": "Exidy Sorcerer"
+  },
+  {
+    "SystemName": "PDP-7"
+  },
+  {
+    "SystemName": "DVD Player"
+  },
+  {
+    "SystemName": "HP 3000"
+  },
+  {
+    "SystemName": "SDS Sigma 7"
+  },
+  {
+    "SystemName": "Daydream"
+  },
+  {
+    "SystemName": "Call-A-Computer time-shared mainframe computer system"
+  },
+  {
+    "SystemName": "Zeebo"
+  },
+  {
+    "SystemName": "PLATO"
+  },
+  {
+    "SystemName": "Blu-ray Player"
+  },
+  {
+    "SystemName": "ZX Spectrum"
+  },
+  {
+    "SystemName": "PC-FX"
+  },
+  {
+    "SystemName": "MSX"
+  },
+  {
+    "SystemName": "Evercade"
+  },
+  {
+    "SystemName": "OOParts"
+  },
+  {
+    "SystemName": "Sinclair ZX81"
+  },
+  {
+    "SystemName": "DUPLICATE Stadia"
+  },
+  {
+    "SystemName": "Casio Loopy"
+  },
+  {
+    "SystemName": "Xbox Series X|S"
+  },
+  {
+    "SystemName": "Xbox 360"
+  },
+  {
+    "SystemName": "Xbox One"
+  },
+  {
+    "SystemName": "Family Computer"
+  },
+  {
+    "SystemName": "AirConsole"
+  },
+  {
+    "SystemName": "Sega Mega Drive/Genesis"
+  },
+  {
+    "SystemName": "Meta Quest 2"
+  },
+  {
+    "SystemName": "PlayStation VR2"
+  },
+  {
+    "SystemName": "Amiga"
+  },
+  {
+    "SystemName": "Virtual Console"
+  },
+  {
+    "SystemName": "PlayStation VR"
+  },
+  {
+    "SystemName": "Windows Mobile"
+  },
+  {
+    "SystemName": "Sinclair QL"
+  },
+  {
+    "SystemName": "HyperScan"
+  },
+  {
+    "SystemName": "Mega Duck/Cougar Boy"
+  },
+  {
+    "SystemName": "Legacy Computer"
+  },
+  {
+    "SystemName": "Atari Jaguar CD"
+  },
+  {
+    "SystemName": "Handheld Electronic LCD"
+  },
+  {
+    "SystemName": "Leapster"
+  },
+  {
+    "SystemName": "Leapster Explorer/LeadPad Explorer"
+  },
+  {
+    "SystemName": "LeapTV"
+  },
+  {
+    "SystemName": "Watara/QuickShot Supervision"
+  },
+  {
+    "SystemName": "Nintendo 64DD"
+  },
+  {
+    "SystemName": "Palm OS"
+  },
+  {
+    "SystemName": "Arduboy"
+  },
+  {
+    "SystemName": "V.Smile"
+  },
+  {
+    "SystemName": "PocketStation"
+  },
+  {
+    "SystemName": "Meta Quest 3"
+  },
+  {
+    "SystemName": "PlayStation"
+  },
+  {
+    "SystemName": "Android"
+  },
+  {
+    "SystemName": "Atari 2600"
+  },
+  {
+    "SystemName": "ColecoVision"
+  },
+  {
+    "SystemName": "Visual Memory Unit / Visual Memory System"
+  },
+  {
+    "SystemName": "Arcadia 2001"
+  },
+  {
+    "SystemName": "Gizmondo"
+  },
+  {
+    "SystemName": "visionOS"
+  },
+  {
+    "SystemName": "R-Zone"
+  },
+  {
+    "SystemName": "Apple Pippin"
+  },
+  {
+    "SystemName": "Linux"
+  },
+  {
+    "SystemName": "Nintendo 64"
+  }
+]

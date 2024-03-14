@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="credentials.json.example" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="credentials.json.example" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Images\gamestorelogo.png" />
   </ItemGroup>
 
@@ -18,10 +26,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.26" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\Account\" />
   </ItemGroup>
 
 </Project>

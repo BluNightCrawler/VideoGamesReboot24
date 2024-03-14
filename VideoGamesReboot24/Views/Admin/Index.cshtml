@@ -1,10 +1,11 @@
 ﻿@model VideoGamesReboot24.Models.ViewModels.AccessTokenExpireDate?
 
-<div class="w-100 m-auto text-center" style="max-width:330px;">
+<div class="w-100 m-auto text-center">
     <h1 class="h3 mb-3 fw-normal">Admin Page</h1>
-    <div class="d-flex justify-content-between">
-        <a class="btn btn-primary btn-square" asp-controller="Admin" asp-action="ManageUsers">Manager Users</a>
-        <div>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-primary btn-square mx-3" asp-controller="Home" asp-action="Import">Import More Games!</a>
+        <a class="btn btn-primary btn-square mx-3" asp-controller="Admin" asp-action="ManageUsers">Manager Users</a>
+        <div class="mx-3">
             <a class="btn btn-primary btn-square" asp-controller="Admin" asp-action="UpdateAccessToken">
                 <span>Update Access Token
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle mb-1" viewBox="0 0 16 16">

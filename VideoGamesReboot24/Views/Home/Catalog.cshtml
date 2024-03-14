@@ -21,62 +21,69 @@
     </div>
     TempData.Clear();
 }
-<a class="btn btn-primary" asp-controller="Home" asp-action="Import">Import More Games!</a>
 <div class="row mt-3 mb-3">
-@foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGameFull>())
+@if (Model?.VideoGames.Count() == 0)
 {
-    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
-        <div class="card" style="width: 20rem;">
-            <img src="@Url.Content(p.ImagePath)" class="card-img-top" alt="..." height="250px">
-            <div class="card-body">
-                <h5 class="card-title">@p.Name</h5>
-                <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
-                <ul class="list-group list-group-flush">
-                    @if (p.ReleaseDate is not null)
-                    {
-                        <li class="list-group-item">Release Date: @p.ReleaseDate.Value.ToShortDateString()</li>
-                    }
-                    @if (p.Rating is not null)
-                    {
-                        <li class="list-group-item">Rating: @string.Format("{0:0.0}", p.Rating.Value) (@p.RatingCount)</li>
-                    }
-                    @if (p.Systems.Count > 0)
-                    {
-                        <li class="list-group-item">
-                            <span>Systems: </span>
-                            @foreach (var s in p.Systems)
-                            {
-                                <span class="badge rounded-pill bg-primary">@s.Name</span>
-                            }
-                        </li>
-                    }
-                    @if (p.Categories.Count > 0)
-                    {
-                        <li class="list-group-item">
-                            <span>Categories: </span>
-                            @foreach (var c in p.Categories)
-                            {
-                                <span class="badge rounded-pill bg-secondary">@c.Name</span>
-                            }
-                        </li>
-                    }
-                </ul>
-                <hr />
-                <td>
-                    <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.Id">Details</a> 
-                @if (User.IsInRole("Admin"))
-                {
-                    <span> | </span>
-                    <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.Id">Edit</a>
-                    <span> | </span>
-                    @Html.ActionLink("Delete", "Delete", new { id = p.Id }, new { onclick = "return confirm('Are you sure you want to delete this Game?')" })
+    <h5 class="mt-4">
+        No Games Available With Selected Search Criteria Click <a asp-action="Catalog" asp-controller="Home" asp-route-category="">Here</a> to Reset Search.
+    </h5>
+}else
+{
+    foreach (var p in Model?.VideoGames ?? Enumerable.Empty<VideoGameFull>())
+    {
+        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center">
+            <div class="card" style="width: 20rem;">
+                <img src="@Url.Content(p.ImagePath)" class="card-img-top" alt="..." height="250px">
+                <div class="card-body">
+                    <h5 class="card-title">@p.Name</h5>
+                    <h6 class="card-subtitle text-muted">@p.Price.ToString("c")</h6>
+                    <ul class="list-group list-group-flush">
+                        @if (p.ReleaseDate is not null)
+                        {
+                            <li class="list-group-item">Release Date: @p.ReleaseDate.Value.ToShortDateString()</li>
+                        }
+                        @if (p.Rating is not null)
+                        {
+                            <li class="list-group-item">Rating: @string.Format("{0:0.0}", p.Rating.Value) (@p.RatingCount)</li>
+                        }
+                        @if (p.Systems.Count > 0)
+                        {
+                            <li class="list-group-item">
+                                <span>Systems: </span>
+                                @foreach (var s in p.Systems)
+                                {
+                                    <span class="badge rounded-pill bg-primary">@s.Name</span>
+                                }
+                            </li>
+                        }
+                        @if (p.Categories.Count > 0)
+                        {
+                            <li class="list-group-item">
+                                <span>Categories: </span>
+                                @foreach (var c in p.Categories)
+                                {
+                                    <span class="badge rounded-pill bg-secondary">@c.Name</span>
+                                }
+                            </li>
+                        }
+                    </ul>
                     <hr />
-                }
-                </td>
-                <a class="btn btn-primary">Add to Cart</a>
+                    <td>
+                        <a class="" asp-controller="Products" asp-action="Details" asp-route-id="@p.Id">Details</a> 
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span> | </span>
+                        <a class="" asp-controller="Products" asp-action="Edit" asp-route-id="@p.Id">Edit</a>
+                        <span> | </span>
+                        @Html.ActionLink("Delete", "Delete", new { id = p.Id }, new { onclick = "return confirm('Are you sure you want to delete this Game?')" })
+                        <hr />
+                    }
+                    </td>
+                    <a class="btn btn-primary">Add to Cart</a>
+                </div>
             </div>
         </div>
-    </div>
+    }
 }
 </div>
 

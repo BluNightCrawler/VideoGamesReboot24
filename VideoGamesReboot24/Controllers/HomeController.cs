@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using VideoGamesReboot24.Infrastructure;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -122,56 +123,100 @@ namespace VideoGamesReboot24.Controllers
         {
             if (id == null) return (ViewResult)Error();
 
-            VideoGameFull? game = repository.Products.FirstOrDefault(p => p.Id == id);
+            VideoGameFull? game = repository.Products.Include(x=> x.Categories).Include(x=>x.Systems).FirstOrDefault(p => p.Id == id);
 
             if (game == null) return (ViewResult)Error();
 
+            List<SelectListItem> cats = new List<SelectListItem>();
+            List<SelectListItem> syss = new List<SelectListItem>();
+            List<SelectListItem> ageratings = new List<SelectListItem>();
+            foreach (var cat in gameStoreDbContext.Categories.ToList())
+            {
+                cats.Add(new SelectListItem
+                {
+                    Text = cat.Name,
+                    Value = cat.Id.ToString(),
+                    Selected = game.Categories.Contains(cat)
+                });
+            }
+            foreach (var sys in gameStoreDbContext.Systems.ToList())
+            {
+                syss.Add(new SelectListItem
+                {
+                    Text=sys.Name,
+                    Value = sys.Id.ToString(),
+                    Selected = game.Systems.Contains(sys)
+                });
+            }
+            var agerating = Enum.GetNames(typeof(Ratings));
+            for(int i = 0; i < agerating.Length; i++)
+            {
+                ageratings.Add(new SelectListItem
+                {
+                    Text = agerating[i],
+                    Value = agerating[i],
+                    Selected = game.AgeRating == agerating[i]
+                });
+            }
 
             VideoGameWithCatsAndSys viewModel = new VideoGameWithCatsAndSys
             {
                 VideoGame = game,
-                Categories = gameStoreDbContext.Categories.ToList(),
-                Systems = repository.Products.Include(x => x.Systems).SelectMany(x => x.Systems).ToList()
+                Categories = cats,
+                Systems = syss,
+                AgeRatings = ageratings
             };
 
             return View("VideoGamesEdit", viewModel);
         }
 
-        //[HttpPost]
-        //[Authorize(Policy = "AdminRestricted")]
-        //public ActionResult Edit(VideoGameFull game)
-        //{
-        //    if (!ModelState.IsValid) { return View("VideoGamesEdit", game); }
+        [HttpPost]
+        [Authorize(Policy = "AdminRestricted")]
+        public ActionResult Edit(VideoGameWithCatsAndSys gameModel)
+        {
+            ModelState.Remove("VideoGame.Systems");
+            ModelState.Remove("VideoGame.Categories");
+            ModelState.Remove("Categories");
+            ModelState.Remove("Systems");
+            ModelState.Remove("AgeRatings");
+            if (!ModelState.IsValid) { return View("VideoGamesEdit", gameModel); }
+            
+            VideoGameFull game = gameModel.VideoGame;
 
+            VideoGameFull? gameEdit = repository.Products.Include(x=>x.Categories).Include(x=>x.Systems).FirstOrDefault(p => p.Id == game.Id);
 
-        //    VideoGameFull? gameEdit = repository.Products.FirstOrDefault(p => p.Id == game.ProductID);
+            if (gameEdit == null) return (ViewResult)Error();
 
-        //    if (gameEdit == null) return (ViewResult)Error();
+            gameEdit.Name = game.Name;
+            gameEdit.Description = game.Description;
+            gameEdit.Price = game.Price;
+            gameEdit.AgeRating = game.AgeRating;
+            gameEdit.LongImagePath = game.LongImagePath;
+            gameEdit.Rating = game.Rating;
+            gameEdit.RatingCount = game.RatingCount;
+            gameEdit.ReleaseDate = game.ReleaseDate;
 
-        //    gameEdit.ProductName = game.ProductName;
-        //    gameEdit.Price = game.Price;
-        //    gameEdit.Description = game.Description;
-        //    gameEdit.Category = game.Category;
-        //    gameEdit.System = game.System;
+            gameEdit.Categories = gameStoreDbContext.Categories.Where(s => gameModel.CategoryIds.Contains(s.Id)).ToList();
+            gameEdit.Systems = gameStoreDbContext.Systems.Where(s => gameModel.SystemIds.Contains(s.Id)).ToList();
 
-        //    IFormFile uploadedImage = Request.Form.Files["Image"];
-        //    if (uploadedImage != null)
-        //    {
-        //        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
-        //        string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
-        //        string fullPath = Path.Combine(path, fileName);
-        //        uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
-        //        gameEdit.ImagePath = "~/Images/Game/" + fileName;
-        //    }
-        //    else
-        //    {
-        //        gameEdit.ImagePath = game.ImagePath == "$" ? "" : game.ImagePath;
-        //    }
+            IFormFile uploadedImage = Request.Form.Files["Image"];
+            if (uploadedImage != null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images\\Game");
+                string fileName = Guid.NewGuid().ToString() + uploadedImage.FileName;
+                string fullPath = Path.Combine(path, fileName);
+                uploadedImage.CopyTo(new FileStream(fullPath, FileMode.Create));
+                gameEdit.ImagePath = "~/Images/Game/" + fileName;
+            }
+            else
+            {
+                gameEdit.ImagePath = game.ImagePath == "$" ? "" : game.ImagePath;
+            }
 
-        //    repository.SaveProduct(game);
+            repository.SaveProduct(game);
 
-        //    return RedirectToAction("Catalog");
-        //}
+            return RedirectToAction("Catalog");
+        }
 
         [HttpGet]
         [Route("Products/Delete/{id?}")]

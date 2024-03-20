@@ -1,0 +1,41 @@
+﻿@model Cart
+<h2>Your cart</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model?.Lines ?? Enumerable.Empty<CartLine>())
+        {
+            <tr>
+                <td class="text-center">@line.Quantity</td>
+                <td class="text-left">@line.VideoGame.Name</td>
+                <td class="text-right">@line.VideoGame.Price.ToString("c")</td>
+                <td class="text-right">
+                    @((line.Quantity * line.VideoGame.Price).ToString("c"))
+                </td>
+                <td class="text-center">
+                    <a asp-controller="Order" asp-action="RemoveFromCart" asp-route-id="@line.VideoGame.Id" class="btn btn-danger btn-sm">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model?.ComputeTotalValue().ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="text-center">
+    <a class="btn btn-secondary" asp-controller="Home" asp-action="Catalog">Continue shopping</a>
+    <a class="btn btn-primary" asp-action="Checkout" asp-controller="Order">Checkout</a>
+</div>

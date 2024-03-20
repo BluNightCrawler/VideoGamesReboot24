@@ -11,6 +11,7 @@ namespace VideoGamesReboot24.Models
         public DbSet<VideoGameFull> VideoGames => Set<VideoGameFull>();
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<System> Systems => Set<System>();
+        public DbSet<Order> Orders => Set<Order>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,0 +1,6 @@
+﻿@model Order
+<div class="w-100 m-auto" style="max-width:330px;">
+    <h2>Order Complete</h2>
+    <p>Thanks for placing the order! Your order number is #@Model.OrderID</p>
+    <a class="btn btn-primary mt-3" asp-controller="Home" asp-action="Index">Return to Store</a>
+</div>

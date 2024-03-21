@@ -4,6 +4,7 @@ using VideoGamesReboot24.Models;
 using VideoGamesReboot24.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -11,10 +12,12 @@ namespace VideoGamesReboot24.Controllers
     {
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        private readonly GameStoreDbContext gameStoreDbContext;
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, GameStoreDbContext gameStoreDbContext)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.gameStoreDbContext = gameStoreDbContext;
         }
 
         //public IActionResult Index()
@@ -135,10 +138,27 @@ namespace VideoGamesReboot24.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "LoginRestricted")]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Route("Account/OrderHistory")]
+        [Authorize(Policy = "LoginRestricted")]
+        public ActionResult OrderHistory()
+        {
+            List<OrderWithTotal> ordersWithTotals = new List<OrderWithTotal>();
+            AppUser currentUser = userManager.FindByNameAsync(User.Identity.Name).Result;
+            List<Order> allOrders = gameStoreDbContext.Orders.Where(o => o.UserId == currentUser.Id).Include(o => o.Lines).ThenInclude(v => v.VideoGame).ToList();
+            allOrders.ForEach(o => {
+                ordersWithTotals.Add(new OrderWithTotal
+                    { Order = o, Total = o.Lines.Sum(e => e.VideoGame.Price * e.Quantity) });
+            });
+
+            return View(ordersWithTotals);
         }
     }
 }

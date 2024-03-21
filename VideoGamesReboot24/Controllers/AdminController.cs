@@ -9,6 +9,7 @@ using VideoGamesReboot24.Models.ViewModels;
 using VideoGamesReboot24.Infrastructure;
 using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace VideoGamesReboot24.Controllers
 {
@@ -120,8 +121,22 @@ namespace VideoGamesReboot24.Controllers
             return getIndexView();
         }
 
+        [HttpGet]
+        [Route("Admin/OrderHistory")]
+        public ActionResult OrderHistory()
+        {
+            List<OrderWithTotal> ordersWithTotals = new List<OrderWithTotal>();
+            List<Order> allOrders = gameStoreDbContext.Orders.Include(o => o.Lines).ThenInclude(v => v.VideoGame).ToList();
+            allOrders.ForEach(o => {
+                ordersWithTotals.Add(new OrderWithTotal
+                    { Order = o, Total = o.Lines.Sum(e => e.VideoGame.Price * e.Quantity) });
+            });
+
+            return View(ordersWithTotals);
+        }
+
         //helper methods
-        public async Task<List<UserWithRoles>> getAllUsersWithRoles()
+        private async Task<List<UserWithRoles>> getAllUsersWithRoles()
         {
             List<UserWithRoles> allUsers = new List<UserWithRoles>();
 

@@ -11,5 +11,13 @@ $(document).ready(function () {
             }
         }
     );
+
     $(".chosen-select").chosen()
+
+    $("#category-select-filter").on("change", function () {
+        document.forms["FilterForm"].submit();
+    });
+    $("#systems-select-filter").on("change", function () {
+        document.forms["FilterForm"].submit();
+    });
 });

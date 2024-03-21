@@ -16,6 +16,8 @@ builder.Services.AddScoped<IStoreRepository, Repository>();
 
 builder.Services.AddRazorPages();
 //builder.Services.AddServerSideBlazor();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     options.UseSqlServer(
@@ -41,8 +43,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRequestLocalization(opts => {
+    opts.AddSupportedCultures("en-US")
+        .AddSupportedUICultures("en-US")
+        .SetDefaultCulture("en-US");
+});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
 
 app.MapControllerRoute("catpage", "Products/Catalog/{category}/{productPage:int}",
     new { Controller = "Home", action = "Catalog" });

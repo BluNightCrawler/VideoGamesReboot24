@@ -1,13 +1,12 @@
-﻿@model IEnumerable<string>
-<div class="d-flex justify-content-center gap-1">
-    @foreach (string category in Model ?? Enumerable.Empty<string>())
-    {
-        <a class="btn @(category == ViewBag.SelectedCategory? "btn-primary": "btn-outline-secondary")"
-            asp-action="Catalog" asp-controller="Home" asp-route-category="@category" asp-route-productPage="1">
-                @category
+﻿@model CatAndSysFilters
+<form name="FilterForm" asp-controller="Home" asp-action="Filter" method="post" enctype="multipart/form-data">
+    <div class="d-flex justify-content-around gap-2">
+        <label class="form-label my-2">Categories: </label>
+        @Html.DropDownList("category-select-filter", Model.Categories, new { @class = "form-select chosen-select" })
+        <label class="form-label my-2">Systems: </label>
+        @Html.DropDownList("systems-select-filter", Model.Systems, new { @class = "form-select chosen-select" })
+        <a class="btn btn-outline-secondary" asp-action="Catalog" asp-controller="Home" asp-route-category="">
+            Reset
         </a>
-    }
-    <a class="btn btn-outline-secondary" asp-action="Catalog" asp-controller="Home" asp-route-category="">
-        Reset
-    </a>
-</div>
+    </div>
+</form>

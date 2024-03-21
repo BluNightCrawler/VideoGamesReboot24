@@ -19,6 +19,7 @@ namespace VideoGamesReboot24.Controllers
         private UserManager<AppUser> userManager;
         private IStoreRepository repository;
         private GameStoreDbContext gameStoreDbContext;
+        private VideoGameFull context;
         //static List<SeedData> video ;
         public int PageSize = 8;
 
@@ -28,8 +29,11 @@ namespace VideoGamesReboot24.Controllers
             this.userManager = userManager;
             this.gameStoreDbContext = context;
         }
-        public ViewResult Index()
+        
+        public ActionResult Index()
         {
+            
+
             return View();
         }
 

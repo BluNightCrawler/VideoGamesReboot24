@@ -39,3 +39,20 @@ body {
     display: flex;
     justify-content: center;
 }
+.gallery-container {
+    width: 100%;
+    overflow: hidden; /* Hide overflowing content */
+}
+
+.gallery {
+    display: flex; /* Display images in a row */
+    transition: transform 0.5s ease; /* Smooth transition effect */
+}
+
+    .gallery img {
+        width: 100%; /* Ensure images fill the container */
+        height: auto;
+        margin-right: 10px; /* Add spacing between images */
+    }
+    
+}

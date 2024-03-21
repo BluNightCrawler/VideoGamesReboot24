@@ -1,1 +1,127 @@
-﻿Welcome Page!
+﻿@{
+   
+}
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scrolling Image Gallery</title>
+<style>
+    #title {
+    text-align: center;
+    font-size: 2em;
+    margin-top: 50px;
+  }
+
+ 
+  #gallery-container {
+    width: 80%;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+  }
+  
+  #image-gallery {
+    white-space: nowrap;
+    transition: transform 0.3s ease;
+  }
+  
+  .gallery-img {
+    width: calc(100%/3);
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  #prev-btn, #next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: purple;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  #prev-btn {
+    left: 0;
+  }
+  
+  #next-btn {
+    right: 0;
+  }
+</style>
+</head>
+
+<body>
+    <h1>Welcome to the old video game store</h1>
+    <div id="title">Welcome to the Cool Scrolling Image Gallery</div>
+<div id="gallery-container">
+  <div id="image-gallery">
+    <img class="gallery-img" src="/Images/Game/assassins-creed-brotherhood.png" alt="Image 1">
+    <img class="gallery-img" src="/Images/Game/destiny-2.png" alt="Image 2">
+    <img class="gallery-img" src="/Images/Game/life-is-strange.png" alt="Image 3">
+    <img class="gallery-img" src="/Images/Game/spore.png" alt="Image 4">
+    <img class="gallery-img" src="/Images/Game/star-fox-64.png" alt="Image 5">
+    <img class="gallery-img" src="/Images/Game/stardew-valley.png" alt="Image 6">
+    <img class="gallery-img" src="/Images/Game/super-mario-3d-land.png" alt="Image 7">
+    <img class="gallery-img" src="/Images/Game/super-mario-galaxy-2.png" alt="Image 8">
+    <img class="gallery-img" src="/Images/Game/super-mario-world.png" alt="Image 9">
+    <img class="gallery-img" src="/Images/Game/the-binding-of-isaac-rebirth.png" alt="Image 10">
+    <img class="gallery-img" src="/Images/Game/the-elder-scrolls-iv-oblivion.png" alt="Image 11">
+    <img class="gallery-img" src="/Images/Game/the-elder-scrolls-online.png" alt="Image 12">
+    <img class="gallery-img" src="/Images/Game/saints-row-iv.png" alt="Image 13">
+    <img class="gallery-img" src="/Images/Game/quantum-break.png" alt="Image 14">
+    <img class="gallery-img" src="/Images/Game/portal-2.png" alt="Image 15">
+    <img class="gallery-img" src="/Images/Game/pokemon-firered.png" alt="Image 16">
+    <img class="gallery-img" src="/Images/Game/metroid-prime.png" alt="Image 17">
+    <img class="gallery-img" src="/Images/Game/mario-kart-64.png" alt="Image 18">
+    <img class="gallery-img" src="/Images/Game/forza-horizon-3.png" alt="Image 19">
+    <img class="gallery-img" src="/Images/Game/borderlands-2.png" alt="Image 20">
+    <img class="gallery-img" src="/Images/Game/call-of-duty-modern-warfare-3.png" alt="Image 21">
+
+
+    
+    <!-- Add more images here -->
+  </div>
+  <button id="prev-btn">&lt;</button>
+  <button id="next-btn">&gt;</button>
+</div>
+
+<script>
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const gallery = document.getElementById('image-gallery');
+  const images = document.querySelectorAll('.gallery-img');
+  let currentIndex = 0;
+  
+  function scrollGallery(direction) {
+    if (direction === 'next') {
+       currentIndex = (currentIndex + 1) % images.length;
+    } else {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+    }
+    const offset = -currentIndex * images[0].clientWidth;
+    gallery.style.transform = `translateX(${offset}px)`;
+  }
+  
+  nextBtn.addEventListener('click', () => scrollGallery('next'));
+  prevBtn.addEventListener('click', () => scrollGallery('prev'));
+  const title = document.getElementById('title');
+  let rotationAngle = 0;
+  let colorIndex = 0;
+  const colors = ['#ff0000', '#0000ff', '#00ff00','#6A0DAD', '#FF7F00', '#FFFF00' ]; // Red, Blue, Green
+const colorChangeInterval = 5000;
+  
+  function changeTitleStyle() {
+    title.style.color = colors[colorIndex];
+    title.style.transform = `rotateY(${rotationAngle}deg) scale(1)`;
+    rotationAngle += 50; // Adjust the rotation speed here
+    colorIndex = (colorIndex + 1) % colors.length;
+      setTimeout(changeTitleStyle, colorChangeInterval);
+  }
+
+  changeTitleStyle(); // Start the animation
+</script>
+</body>
+</html>
+

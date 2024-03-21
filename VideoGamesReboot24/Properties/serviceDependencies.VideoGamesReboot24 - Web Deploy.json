@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/VideoGamesReboot24/providers/Microsoft.ServiceLinker/linkers/GameStoreDBConnection_571382982E",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/videogamestoredbserver/databases/VideoGameStore_db",
+      "type": "mssql.azure",
+      "connectionId": "GameStoreDBConnection"
+    },
+    "mssql2": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/VideoGamesReboot24/providers/Microsoft.ServiceLinker/linkers/GameStoreIdentityDBConnection_B3D116CE8C",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/videogamestoredbserver/databases/VideoGameStoreIdentity_db",
+      "type": "mssql.azure",
+      "connectionId": "GameStoreIdentityDBConnection"
+    }
+  }
+}

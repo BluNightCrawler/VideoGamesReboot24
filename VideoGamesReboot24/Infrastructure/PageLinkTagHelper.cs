@@ -23,6 +23,8 @@ namespace VideoGamesReboot24.Infrastructure
 
         public string? PageAction { get; set; }
 
+        public string? SystemFilter { get; set; }
+
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
         public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
 
@@ -41,7 +43,7 @@ namespace VideoGamesReboot24.Infrastructure
                     innerLi.AddCssClass("page-item");
                     TagBuilder tag = new TagBuilder("a");
                     PageUrlValues["productPage"] = i;
-                    tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
+                    tag.Attributes["href"] = SystemFilter!=null ? urlHelper.Action(PageAction, PageUrlValues) + "?system=" + SystemFilter : urlHelper.Action(PageAction, PageUrlValues);
                     tag.AddCssClass("page-link");
                     tag.InnerHtml.Append(i.ToString());
                     innerLi.InnerHtml.AppendHtml(tag);

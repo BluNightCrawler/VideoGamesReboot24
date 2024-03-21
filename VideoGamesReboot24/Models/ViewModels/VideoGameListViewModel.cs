@@ -6,5 +6,6 @@
             = Enumerable.Empty<VideoGameFull>();
         public PagingInfo PagingInfo { get; set; } = new();
         public string? CurrentCategory { get; set; }
+        public string? CurrentSystem { get; set; }
     }
 }

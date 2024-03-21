@@ -33,23 +33,29 @@ namespace VideoGamesReboot24.Controllers
             return View();
         }
 
-        public ViewResult Catalog(string? category, int productPage = 1)
-            => View(new VideoGameListViewModel {
-                VideoGames = repository.Products
+        public ViewResult Catalog(string? category, string? system, int productPage = 1)
+        {
+            var products = repository.Products
                     .Include(p => p.Categories)
                     .Include(p => p.Systems)
                     .Where(p => category == null || p.Categories.Any(c => c.Name == category))
-                    .OrderBy(p => p.Id)
+                    .Where(p => system == null || p.Systems.Any(s => s.Name == system))
+                    .OrderBy(p => p.Id);
+            return View(new VideoGameListViewModel
+            {
+                VideoGames = products
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize),
-                PagingInfo = new PagingInfo {
+                PagingInfo = new PagingInfo
+                {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = category==null? repository.Products.Count() :
-                        repository.Products.Where(p => p.Categories.Any(c => c.Name == category)).Count()
+                    TotalItems = products.Count()
                 },
-                CurrentCategory = category
+                CurrentCategory = category,
+                CurrentSystem = system
             });
+        }
 
         [HttpGet]
         [Route("Products/Catalog/Import")]
@@ -295,6 +301,12 @@ namespace VideoGamesReboot24.Controllers
                 },
                 CurrentCategory = null
             });
+        }
+
+        [HttpPost]
+        public ActionResult Filter(IFormCollection form)
+        {
+            return RedirectToAction("Catalog", new { category = (string)form["category-select-filter"], system = (string)form["systems-select-filter"], productPage = 1});
         }
 
 

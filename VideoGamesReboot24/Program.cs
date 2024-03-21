@@ -43,6 +43,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRequestLocalization(opts => {
+    opts.AddSupportedCultures("en-US")
+        .AddSupportedUICultures("en-US")
+        .SetDefaultCulture("en-US");
+});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();

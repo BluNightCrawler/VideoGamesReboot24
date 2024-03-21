@@ -22,7 +22,8 @@ namespace VideoGamesReboot24.Controllers
         //static List<SeedData> video ;
         public int PageSize = 8;
 
-        public HomeController(IStoreRepository repo, UserManager<AppUser> userManager, GameStoreDbContext context)
+        public HomeController(IStoreRepository repo, UserManager<AppUser> userManager,
+            GameStoreDbContext context)
         {
             repository = repo;
             this.userManager = userManager;

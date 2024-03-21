@@ -1,13 +1,71 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<DocType html>
-    <div class="text-center">
-        <h4>About The Programmers who made this Website</h4>
-    </div>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
 
+  #about-table {
+    width: 80%;
+    margin: 50px auto;
+    border-collapse: collapse;
+  }
 
+  #about-table td {
+    padding: 20px;
+    border: 1px solid #ddd;
+  }
 
-</DocType>
+  #left-details {
+    width: 50%;
+    text-align: left;
+  }
+
+  #right-details {
+    width: 50%;
+    text-align: left;
+  }
+
+  #right-details img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+<h1>About Us</h1>
+<table id="about-table">
+  <tr>
+    <td id="left-details">
+      <h2>John Doe</h2>
+      <p>Position: CEO</p>
+      <p>Email: john@example.com</p>
+      <p>Phone: +1 123 456 7890</p>
+    </td>
+    <td id="right-details">
+      <img src="john.jpg" alt="John Doe">
+      <p>John Doe is the CEO of our company. He has been leading the team with his innovative ideas and strategic vision.</p>
+    </td>
+  </tr>
+  <tr>
+    <td id="left-details">
+      <h2>Jeremiah France</h2>
+      <p>School 3rd year</p>
+      <p>Github: BluNightCrawler</p>
+      <p></p>
+    </td>
+    <td id="right-details">
+      <img src="~/Images/Account/jeremiah.jpg" alt="Jeremiah France">
+      <p>I am in my third year of school. My free time is frissbee golf, puzzles, or working out. I would love to travel all the time.
+          </p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

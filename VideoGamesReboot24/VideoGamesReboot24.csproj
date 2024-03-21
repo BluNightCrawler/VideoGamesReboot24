@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Images\Account\jeremiah.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="credentials.json.example" />
   </ItemGroup>
 
@@ -15,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Images\Account\jeremiah.jpg" />
     <None Include="wwwroot\Images\gamestorelogo.png" />
   </ItemGroup>
 

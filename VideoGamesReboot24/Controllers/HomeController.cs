@@ -19,7 +19,6 @@ namespace VideoGamesReboot24.Controllers
         private UserManager<AppUser> userManager;
         private IStoreRepository repository;
         private GameStoreDbContext gameStoreDbContext;
-        private VideoGameFull context;
         //static List<SeedData> video ;
         public int PageSize = 8;
 
@@ -33,9 +32,9 @@ namespace VideoGamesReboot24.Controllers
         
         public ActionResult Index()
         {
-            
+            List<string> imageList = gameStoreDbContext.VideoGames.Select(p => p.ImagePath).Take(20).ToList();
 
-            return View();
+            return View(imageList);
         }
 
         public ViewResult Catalog(string? category, string? system, int productPage = 1)

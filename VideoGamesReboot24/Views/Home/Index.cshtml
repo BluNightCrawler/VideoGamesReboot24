@@ -1,6 +1,5 @@
-﻿@{
-   
-}
+﻿@model List<string>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,13 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scrolling Image Gallery</title>
 <style>
-    #title {
+  #title {
     text-align: center;
     font-size: 2em;
     margin-top: 50px;
   }
 
- 
   #gallery-container {
     width: 80%;
     overflow: hidden;
@@ -53,35 +51,14 @@
 </head>
 
 <body>
-    <h1>Welcome to the old video game store</h1>
+    <h1>Welcome to the Game Store</h1>
     <div id="title">Welcome to the Cool Scrolling Image Gallery</div>
 <div id="gallery-container">
   <div id="image-gallery">
-    <img class="gallery-img" src="/Images/Game/assassins-creed-brotherhood.png" alt="Image 1">
-    <img class="gallery-img" src="/Images/Game/destiny-2.png" alt="Image 2">
-    <img class="gallery-img" src="/Images/Game/life-is-strange.png" alt="Image 3">
-    <img class="gallery-img" src="/Images/Game/spore.png" alt="Image 4">
-    <img class="gallery-img" src="/Images/Game/star-fox-64.png" alt="Image 5">
-    <img class="gallery-img" src="/Images/Game/stardew-valley.png" alt="Image 6">
-    <img class="gallery-img" src="/Images/Game/super-mario-3d-land.png" alt="Image 7">
-    <img class="gallery-img" src="/Images/Game/super-mario-galaxy-2.png" alt="Image 8">
-    <img class="gallery-img" src="/Images/Game/super-mario-world.png" alt="Image 9">
-    <img class="gallery-img" src="/Images/Game/the-binding-of-isaac-rebirth.png" alt="Image 10">
-    <img class="gallery-img" src="/Images/Game/the-elder-scrolls-iv-oblivion.png" alt="Image 11">
-    <img class="gallery-img" src="/Images/Game/the-elder-scrolls-online.png" alt="Image 12">
-    <img class="gallery-img" src="/Images/Game/saints-row-iv.png" alt="Image 13">
-    <img class="gallery-img" src="/Images/Game/quantum-break.png" alt="Image 14">
-    <img class="gallery-img" src="/Images/Game/portal-2.png" alt="Image 15">
-    <img class="gallery-img" src="/Images/Game/pokemon-firered.png" alt="Image 16">
-    <img class="gallery-img" src="/Images/Game/metroid-prime.png" alt="Image 17">
-    <img class="gallery-img" src="/Images/Game/mario-kart-64.png" alt="Image 18">
-    <img class="gallery-img" src="/Images/Game/forza-horizon-3.png" alt="Image 19">
-    <img class="gallery-img" src="/Images/Game/borderlands-2.png" alt="Image 20">
-    <img class="gallery-img" src="/Images/Game/call-of-duty-modern-warfare-3.png" alt="Image 21">
-
-
-    
-    <!-- Add more images here -->
+    @foreach (var image in Model)
+    {
+        <img class="gallery-img" src="@Url.Content(image)" alt="Image">
+    }
   </div>
   <button id="prev-btn">&lt;</button>
   <button id="next-btn">&gt;</button>
@@ -96,9 +73,9 @@
   
   function scrollGallery(direction) {
     if (direction === 'next') {
-       currentIndex = (currentIndex + 1) % images.length;
+        currentIndex = (currentIndex + 1) % (images.length-2);
     } else {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
+        currentIndex = (currentIndex - 1 + images.length-2) % (images.length-2);
     }
     const offset = -currentIndex * images[0].clientWidth;
     gallery.style.transform = `translateX(${offset}px)`;

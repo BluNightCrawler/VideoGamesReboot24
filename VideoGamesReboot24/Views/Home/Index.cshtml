@@ -97,7 +97,11 @@ const colorChangeInterval = 5000;
       setTimeout(changeTitleStyle, colorChangeInterval);
   }
 
-  changeTitleStyle(); // Start the animation
+  changeTitleStyle();
+    setInterval(function () {
+        scrollGallery('next');
+    }, 2500)
+  // Start the animation
 </script>
 </body>
 </html>

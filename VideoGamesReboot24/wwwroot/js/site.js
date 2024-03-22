@@ -22,17 +22,4 @@ $(document).ready(function () {
     });
 });
 
-const galleryContainer = document.querySelector('.gallery-container');
-const gallery = document.querySelector('.gallery');
 
-function scrollLeft() {
-    gallery.scrollLeft -= galleryContainer.offsetWidth;
-}
-
-function scrollRight() {
-    gallery.scrollLeft += galleryContainer.offsetWidth;
-}
-
-function AutomaticScroll() {
-    setInterval(scrollLeft, 3000);
-}
